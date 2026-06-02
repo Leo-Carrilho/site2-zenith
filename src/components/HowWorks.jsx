@@ -1,59 +1,58 @@
-// components/HowWorks.jsx
-import { useReveal } from '../hooks/useReveal';
-import { FaRocket, FaPlane, FaBrain, FaChartBar } from 'react-icons/fa';
+import { FaBrain, FaChartBar, FaCheck, FaPlane, FaRocket } from "react-icons/fa";
 
 const STEPS = [
   {
-    num: '01',
+    num: "01",
     icon: <FaRocket />,
-    title: 'Agende o Voo',
-    desc: 'Defina a área e o objetivo. Nossa equipe programa a missão e agenda o sobrevoo na sua propriedade.',
+    title: "Planejamento",
+    desc: "Definimos área, objetivo da análise e periodicidade ideal para a propriedade.",
   },
   {
-    num: '02',
+    num: "02",
     icon: <FaPlane />,
-    title: 'Drone em Campo',
-    desc: 'Nossos drones autônomos sobrevoam e capturam imagens multiespectrais com precisão centimétrica.',
+    title: "Coleta em campo",
+    desc: "Drones capturam dados visuais e multiespectrais com rotas organizadas e baixa fricção para o produtor.",
   },
   {
-    num: '03',
+    num: "03",
     icon: <FaBrain />,
-    title: 'IA Processa',
-    desc: 'Os dados são analisados pela nossa IA em tempo real, gerando insights acionáveis automaticamente.',
+    title: "IA Zenith",
+    desc: "A plataforma cruza imagens, padrões e histórico para identificar riscos e oportunidades.",
   },
   {
-    num: '04',
+    num: "04",
     icon: <FaChartBar />,
-    title: 'Você Decide',
-    desc: 'Relatórios detalhados chegam no seu celular. Decisão rápida, resultado superior.',
+    title: "Decisão",
+    desc: "Você recebe relatórios objetivos, prioridades de manejo e próximos passos.",
   },
 ];
 
 export default function HowWorks() {
-  const ref = useReveal();
-
   return (
-    <section className="how-works" id="como-funciona" ref={ref}>
+    <section className="section-shell how-works" id="sobre">
       <div className="container">
-        <div className="section-header reveal">
-          <span className="tag">Processo simples</span>
-          <h2>Como <span>funciona</span></h2>
-          <p>Do campo ao relatório em poucas horas</p>
+        <div className="section-header">
+          <span className="section-eyebrow">Como funciona</span>
+          <h2 className="section-title">Do voo ao insight, sem complexidade</h2>
+          <p className="section-copy">
+            A experiência foi pensada para produtores que querem tecnologia avançada sem operação pesada.
+          </p>
         </div>
 
-        <div className="steps-grid">
-          {STEPS.map((s, i) => (
-            <div
-              key={i}
-              className="step-card reveal"
-              style={{ transitionDelay: `${i * 0.12}s` }}
-            >
-              <span className="step-num">{s.num}</span>
-              <div className="step-icon-wrap">{s.icon}</div>
-              <h3 className="step-title">{s.title}</h3>
-              <p className="step-desc">{s.desc}</p>
-            </div>
+        <div className="timeline">
+          {STEPS.map((step) => (
+            <article className="step-card motion-card" key={step.num}>
+              <span className="step-num">{step.num}</span>
+              <div className="step-icon">{step.icon}</div>
+              <h3>{step.title}</h3>
+              <p>{step.desc}</p>
+            </article>
           ))}
+          <article className="step-card result motion-card">
+            <span className="step-num"><FaCheck /></span>
+            <h3>Resultado</h3>
+            <p>Menos incerteza, melhor uso de insumos e decisões agrícolas mais rápidas.</p>
+          </article>
         </div>
       </div>
     </section>

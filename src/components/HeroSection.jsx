@@ -1,47 +1,94 @@
-// components/HeroSection.jsx
-import { useEffect, useRef } from 'react';
-import { FaDownload, FaSeedling, FaWhatsapp } from 'react-icons/fa';
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { FaArrowRight, FaBrain, FaDownload, FaSeedling, FaWhatsapp } from "react-icons/fa";
+
+gsap.registerPlugin(ScrollTrigger);
+
+const METRICS = [
+  { label: "NDVI médio", value: "82%", tone: "strong" },
+  { label: "Risco de pragas", value: "18%", tone: "soft" },
+  { label: "Área mapeada", value: "4.2 km", tone: "strong" },
+];
 
 const BARS = [
-  { label: 'NDVI - Vitalidade', pct: 82 },
-  { label: 'Solo - Umidade', pct: 67 },
-  { label: 'Pragas - Risco', pct: 18 },
+  { label: "Vitalidade", pct: 82 },
+  { label: "Umidade", pct: 67 },
+  { label: "Irrigação", pct: 74 },
 ];
 
 export default function HeroSection() {
-  const textRef = useRef(null);
-  const visualRef = useRef(null);
-  const videoRef = useRef(null);
+  const heroRef = useRef(null);
+  const magneticRef = useRef(null);
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.playbackRate = 0.3;
-    }
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion) return undefined;
 
-    const elements = textRef.current?.children;
-    if (!elements) return;
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-    Array.from(elements).forEach((element, index) => {
-      element.style.opacity = '0';
-      element.style.transform = 'translateY(28px)';
-      element.style.transition = `opacity .9s ${index * 0.12}s cubic-bezier(.16,1,.3,1), transform .9s ${index * 0.12}s cubic-bezier(.16,1,.3,1)`;
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          element.style.opacity = '1';
-          element.style.transform = 'translateY(0)';
-        }, 100 + index * 120);
+      tl.from(".hero-kicker", { y: 28, opacity: 0, duration: 0.75 })
+        .from(".hero-title", { y: 80, opacity: 0, duration: 1 }, "-=0.45")
+        .from(".hero-desc", { y: 32, opacity: 0, duration: 0.85 }, "-=0.5")
+        .from(".hero-actions", { y: 28, opacity: 0, duration: 0.75 }, "-=0.45")
+        .from(".hero-stat", { y: 24, opacity: 0, stagger: 0.1, duration: 0.7 }, "-=0.35")
+        .from(".dashboard-card", { x: 70, scale: 0.94, opacity: 0, duration: 1 }, "-=0.75")
+        .from(".floating-chip", { y: 40, opacity: 0, stagger: 0.12, duration: 0.7 }, "-=0.45");
+
+      gsap.to(".dashboard-card", {
+        y: -22,
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: 1.2,
+        },
       });
-    });
 
-    if (visualRef.current) {
-      visualRef.current.style.opacity = '0';
-      visualRef.current.style.transform = 'translateX(40px) scale(.96)';
-      visualRef.current.style.transition = 'opacity 1.1s .5s cubic-bezier(.16,1,.3,1), transform 1.1s .5s cubic-bezier(.16,1,.3,1)';
-      setTimeout(() => {
-        visualRef.current.style.opacity = '1';
-        visualRef.current.style.transform = 'translateX(0) scale(1)';
-      }, 200);
-    }
+      gsap.to(".hero-orbit", {
+        rotate: 360,
+        duration: 36,
+        repeat: -1,
+        ease: "none",
+      });
+
+      gsap.utils.toArray(".count").forEach((el) => {
+        const target = Number(el.dataset.target);
+        const suffix = el.dataset.suffix || "";
+        gsap.fromTo(el, { innerText: 0 }, {
+          innerText: target,
+          duration: 1.8,
+          snap: { innerText: 1 },
+          scrollTrigger: {
+            trigger: ".hero-stats",
+            start: "top 82%",
+            once: true,
+          },
+          onUpdate: () => {
+            el.textContent = `${el.dataset.prefix || ""}${Math.round(Number(el.innerText))}${suffix}`;
+          },
+        });
+      });
+    }, heroRef);
+
+    const button = magneticRef.current;
+    const onMove = (event) => {
+      const rect = button.getBoundingClientRect();
+      const x = event.clientX - rect.left - rect.width / 2;
+      const y = event.clientY - rect.top - rect.height / 2;
+      gsap.to(button, { x: x * 0.18, y: y * 0.18, duration: 0.35, ease: "power2.out" });
+    };
+    const onLeave = () => gsap.to(button, { x: 0, y: 0, duration: 0.45, ease: "elastic.out(1, .35)" });
+
+    button?.addEventListener("mousemove", onMove);
+    button?.addEventListener("mouseleave", onLeave);
+
+    return () => {
+      ctx.revert();
+      button?.removeEventListener("mousemove", onMove);
+      button?.removeEventListener("mouseleave", onLeave);
+    };
   }, []);
 
   const handleInstall = () => {
@@ -49,125 +96,116 @@ export default function HeroSection() {
     const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
     window.location.href = isAndroid || isIOS
-      ? 'https://instalacao-mobile.vercel.app'
-      : 'https://Zenith-desketop.vercel.app';
+      ? "https://instalacao-mobile.vercel.app"
+      : "https://Zenith-desketop.vercel.app";
   };
 
   return (
-    <section className="hero" id="hero">
-      <video
-        ref={videoRef}
-        className="hero-video"
-        autoPlay
-        muted
-        loop
-        playsInline
-      >
-        <source src="/assets/videos/videoDrone.mp4" type="video/mp4" />
-      </video>
+    <section className="hero" id="hero" ref={heroRef}>
+      <div className="hero-bg-video" aria-hidden="true">
+        <video autoPlay muted loop playsInline>
+          <source src="/assets/videos/videoDrone.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <div className="hero-vignette" aria-hidden="true" />
 
-      <div className="hero-overlay" />
-      <div className="hero-noise" />
-      <div className="hero-grid" />
-
-      <div className="hero-inner">
-        <div className="hero-text" ref={textRef}>
-          <div className="hero-badge">
-            <span className="dot" />
-            <FaSeedling style={{ fontSize: '.85rem' }} />
-            Agricultura Inteligente
+      <div className="container hero-inner">
+        <div className="hero-copy">
+          <div className="hero-kicker">
+            <span className="pulse-dot" />
+            <FaSeedling />
+            Plataforma agro inteligente
           </div>
 
           <h1 className="hero-title">
-            Sua lavoura,<br />
-            no ponto mais <span className="accent">alto</span>
+            IA para impulsionar pequenos e médios produtores rurais
           </h1>
 
           <p className="hero-desc">
-            Monitoramento por drones, análise de IA e relatórios precisos.
-            Reduza custos, previna perdas e maximize sua produtividade agrícola.
+            O Zenith Agro une drones, visão computacional e relatórios acionáveis para antecipar riscos,
+            reduzir desperdícios e transformar dados da lavoura em decisões confiáveis.
           </p>
 
-          <div className="hero-ctas">
-            <button className="btn-primary" onClick={handleInstall}>
+          <div className="hero-actions">
+            <button className="btn btn-primary magnetic" onClick={handleInstall} ref={magneticRef} type="button">
               <FaDownload /> Baixar App
             </button>
-            <a href="https://zenith-desktop2.vercel.app" className="btn-secondary">
-              Acessar plataforma web
+            <a href="https://zenith-desktop2.vercel.app" className="btn btn-secondary">
+              Acessar plataforma <FaArrowRight />
             </a>
-            <a href="https://wa.me/5519999999999" className="btn-thirdary">
+            <a href="https://wa.me/5519999999999" className="btn btn-ghost">
               <FaWhatsapp /> WhatsApp
             </a>
           </div>
 
-          <div className="hero-stats">
+          <div className="hero-stats" aria-label="Indicadores Zenith Agro">
             <div className="hero-stat">
-              <span className="hero-stat-num">+500</span>
-              <span className="hero-stat-label">Hectares monitorados</span>
+              <strong><span className="count" data-prefix="+" data-target="500" /> ha</strong>
+              <span>monitorados</span>
             </div>
             <div className="hero-stat">
-              <span className="hero-stat-num">98%</span>
-              <span className="hero-stat-label">Precisão da IA</span>
+              <strong><span className="count" data-target="98" data-suffix="%" /></strong>
+              <span>precisão da IA</span>
             </div>
             <div className="hero-stat">
-              <span className="hero-stat-num">-35%</span>
-              <span className="hero-stat-label">Redução de custos</span>
+              <strong><span className="count" data-prefix="-" data-target="35" data-suffix="%" /></strong>
+              <span>menos custos</span>
             </div>
           </div>
         </div>
 
-        <div className="hero-visual" ref={visualRef}>
-          <div className="hud-float-card top-right">
-            <div className="hud-float-label">Alerta IA</div>
-            <div className="hud-float-val">Tudo normal</div>
+        <div className="hero-visual" aria-label="Mockup do dashboard Zenith Agro">
+          <div className="hero-orbit" aria-hidden="true" />
+          <div className="floating-chip chip-alert">
+            <FaBrain />
+            <div>
+              <span>Alerta IA</span>
+              <strong>Talhão 03 estável</strong>
+            </div>
+          </div>
+          <div className="floating-chip chip-yield">
+            <span className="mini-spark" />
+            <div>
+              <span>Produtividade</span>
+              <strong>+32% na safra</strong>
+            </div>
           </div>
 
-          <div className="hud-float-card bottom-left">
-            <div className="hud-float-label">Produtividade</div>
-            <div className="hud-float-val">+32% safra</div>
-          </div>
-
-          <div className="hud-dashboard">
-            <div className="hud-top-bar">
-              <div className="hud-dots">
-                <div className="hud-dot red" />
-                <div className="hud-dot amber" />
-                <div className="hud-dot green" />
+          <div className="dashboard-card motion-card">
+            <div className="dashboard-top">
+              <div>
+                <span>Zenith Command</span>
+                <strong>Missão Agro 04</strong>
               </div>
-              <div className="hud-status">DRONE ATIVO - MISSÃO 04</div>
+              <div className="status-pill">Ao vivo</div>
             </div>
 
-            <div className="hud-map">
-              <div className="hud-map-grid" />
-              <div className="hud-scan" />
-              <div className="hud-ping" />
-              <div className="hud-label">AREA MONITORADA - SÃO PAULO</div>
+            <div className="field-map">
+              <div className="scan-line" />
+              <span className="map-pin one" />
+              <span className="map-pin two" />
+              <span className="map-pin three" />
+              <p>Mapa inteligente da lavoura</p>
             </div>
 
-            <div className="hud-metrics">
-              <div className="hud-metric">
-                <div className="hud-metric-val">82%</div>
-                <div className="hud-metric-key">Bateria</div>
-              </div>
-              <div className="hud-metric">
-                <div className="hud-metric-val">120m</div>
-                <div className="hud-metric-key">Altitude</div>
-              </div>
-              <div className="hud-metric">
-                <div className="hud-metric-val">4.2km</div>
-                <div className="hud-metric-key">Cobertura</div>
-              </div>
+            <div className="metric-grid">
+              {METRICS.map((metric) => (
+                <div className={`metric-card ${metric.tone}`} key={metric.label}>
+                  <span>{metric.label}</span>
+                  <strong>{metric.value}</strong>
+                </div>
+              ))}
             </div>
 
-            <div className="hud-bar-row">
+            <div className="analysis-list">
               {BARS.map((bar) => (
-                <div className="hud-bar-item" key={bar.label}>
-                  <div className="hud-bar-label">
+                <div className="analysis-row" key={bar.label}>
+                  <div>
                     <span>{bar.label}</span>
-                    <span>{bar.pct}%</span>
+                    <strong>{bar.pct}%</strong>
                   </div>
-                  <div className="hud-bar-track">
-                    <div className="hud-bar-fill" style={{ width: `${bar.pct}%` }} />
+                  <div className="bar-track">
+                    <span style={{ width: `${bar.pct}%` }} />
                   </div>
                 </div>
               ))}

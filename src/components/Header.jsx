@@ -1,76 +1,51 @@
-// components/Header.jsx
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
+import gsap from "gsap";
+import { FaArrowRight } from "react-icons/fa";
+
+const LINKS = [
+  { href: "#hero", label: "Hero" },
+  { href: "#sobre", label: "Sobre" },
+  { href: "#servicos", label: "Funcionalidades" },
+  { href: "#beneficios", label: "Benefícios" },
+  { href: "#ia-zenith", label: "IA Zenith" },
+  { href: "#contato", label: "Contato" },
+];
 
 export default function Header({ onInstallClick }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    const handleScroll = () => setScrolled(window.scrollY > 18);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
-
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
-    document.body.classList.toggle('menu-open', menuOpen);
-
-    return () => document.body.classList.remove('menu-open');
+    document.body.classList.toggle("menu-open", menuOpen);
+    return () => document.body.classList.remove("menu-open");
   }, [menuOpen]);
 
-  const links = [
-    { href: '#hero', label: 'Início' },
-    { href: '#servicos', label: 'Serviços' },
-    { href: '#como-funciona', label: 'Como Funciona' },
-    { href: '#planos', label: 'Planos' },
-    { href: '#contato', label: 'Contato' },
-  ];
-
   const close = () => setMenuOpen(false);
-  const animateScrollTo = (top) => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    if (prefersReducedMotion) {
-      window.scrollTo(0, top);
-      return;
-    }
-
-    const start = window.scrollY;
-    const distance = top - start;
-    const duration = Math.min(1100, Math.max(520, Math.abs(distance) * 0.55));
-    const startTime = performance.now();
-    const ease = (progress) => (
-      progress < 0.5
-        ? 4 * progress * progress * progress
-        : 1 - Math.pow(-2 * progress + 2, 3) / 2
-    );
-
-    const step = (now) => {
-      const progress = Math.min((now - startTime) / duration, 1);
-      window.scrollTo(0, start + distance * ease(progress));
-
-      if (progress < 1) {
-        requestAnimationFrame(step);
-      }
-    };
-
-    requestAnimationFrame(step);
-  };
 
   const scrollToSection = (event, href) => {
-    if (!href.startsWith('#')) return;
-
+    if (!href.startsWith("#")) return;
     event.preventDefault();
+
     const target = document.querySelector(href);
     if (!target) return;
 
-    const headerOffset = window.innerWidth <= 640 ? 86 : 104;
-    const targetTop = target.getBoundingClientRect().top + window.scrollY - headerOffset;
+    const offset = window.innerWidth <= 700 ? 84 : 104;
+    const y = target.getBoundingClientRect().top + window.scrollY - offset;
 
     close();
-    animateScrollTo(Math.max(targetTop, 0));
-    window.history.replaceState(null, '', href);
+    gsap.to(window, {
+      duration: 1.5,
+      scrollTo: { y: Math.max(y, 0), autoKill: true },
+      ease: "power3.inOut",
+      onComplete: () => window.history.replaceState(null, "", href),
+    });
   };
 
   const handleInstall = () => {
@@ -80,19 +55,19 @@ export default function Header({ onInstallClick }) {
 
   return (
     <>
-      <header className={`navbar${scrolled ? ' scrolled' : ''}`}>
+      <header className={`navbar${scrolled ? " scrolled" : ""}`}>
         <a
           href="#hero"
           className="nav-logo"
-          onClick={(event) => scrollToSection(event, '#hero')}
-          aria-label="Zenith - início"
+          onClick={(event) => scrollToSection(event, "#hero")}
+          aria-label="Zenith Agro - início"
         >
-          <span className="nav-logo-icon" aria-hidden="true">Z</span>
-          <span>Zenith</span>
+          <span className="nav-logo-mark" aria-hidden="true">Z</span>
+          <span>Zenith Agro</span>
         </a>
 
         <nav className="nav-links" aria-label="Navegação principal">
-          {links.map((link) => (
+          {LINKS.map((link) => (
             <a key={link.href} href={link.href} onClick={(event) => scrollToSection(event, link.href)}>
               {link.label}
             </a>
@@ -100,18 +75,18 @@ export default function Header({ onInstallClick }) {
         </nav>
 
         <div className="nav-actions">
-          <a href="https://wa.me/5519999999999" className="nav-action-link btn-secondary">
-            WhatsApp
+          <a href="#contato" className="btn btn-ghost small" onClick={(event) => scrollToSection(event, "#contato")}>
+            Demo
           </a>
-          <button className="nav-action-link btn-primary" onClick={handleInstall}>
-            Baixar App
+          <button className="btn btn-primary small" onClick={handleInstall} type="button">
+            Baixar App <FaArrowRight />
           </button>
         </div>
 
         <button
-          className={`hamburger${menuOpen ? ' open' : ''}`}
+          className={`hamburger${menuOpen ? " open" : ""}`}
           onClick={() => setMenuOpen((value) => !value)}
-          aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
+          aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
           aria-expanded={menuOpen}
           aria-controls="mobile-menu"
           type="button"
@@ -122,19 +97,27 @@ export default function Header({ onInstallClick }) {
         </button>
       </header>
 
-      <div className={`mobile-menu${menuOpen ? ' open' : ''}`} id="mobile-menu">
-        {links.map((link) => (
+      <button
+        className={`menu-backdrop${menuOpen ? " open" : ""}`}
+        aria-label="Fechar menu"
+        onClick={close}
+        type="button"
+      />
+
+      <aside className={`mobile-menu${menuOpen ? " open" : ""}`} id="mobile-menu" aria-hidden={!menuOpen}>
+        <div className="mobile-menu-head">
+          <span>Menu</span>
+          <button type="button" onClick={close} aria-label="Fechar menu">×</button>
+        </div>
+        {LINKS.map((link) => (
           <a key={link.href} href={link.href} onClick={(event) => scrollToSection(event, link.href)}>
             {link.label}
           </a>
         ))}
-        <a href="https://wa.me/5519999999999" className="btn-secondary" onClick={close}>
-          WhatsApp
-        </a>
-        <button className="btn-primary" onClick={handleInstall}>
-          Baixar App
+        <button className="btn btn-primary" onClick={handleInstall} type="button">
+          Baixar App <FaArrowRight />
         </button>
-      </div>
+      </aside>
     </>
   );
 }

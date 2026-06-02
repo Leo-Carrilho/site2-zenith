@@ -1,93 +1,55 @@
-// components/Plans.jsx
-import { useReveal } from '../hooks/useReveal';
-
 const PLANS = [
   {
-    badge: 'Básico',
-    name: 'Agro Vision',
-    price: 'R$ 799',
-    period: '/anual',
-    features: [
-      'Monitoramento de até 50 ha',
-      'Relatórios mensais com IA',
-      'Suporte por e-mail',
-      'Acesso ao app de monitoramento',
-    ],
-    featured: false,
+    badge: "Essencial",
+    name: "Agro Vision",
+    price: "R$ 799",
+    period: "/ano",
+    features: ["Até 50 ha", "Relatórios mensais com IA", "Suporte por e-mail", "App de monitoramento"],
   },
   {
-    badge: 'Mais popular',
-    name: 'Agro Imperial',
-    price: 'R$ 1.200',
-    period: '/anual',
-    features: [
-      'Monitoramento de até 200 ha',
-      'Relatórios semanais com IA',
-      'Suporte prioritário 24/7',
-      'Acesso completo ao app',
-      'Consultoria especializada',
-    ],
+    badge: "Mais popular",
+    name: "Agro Imperial",
+    price: "R$ 1.200",
+    period: "/ano",
+    features: ["Até 200 ha", "Relatórios semanais", "Suporte prioritário", "Consultoria especializada"],
     featured: true,
   },
   {
-    badge: 'Empresarial',
-    name: 'Agro Enterprise',
-    price: 'Sob consulta',
-    period: '',
-    features: [
-      'Monitoramento ilimitado',
-      'Relatórios em tempo real',
-      'API de integração',
-      'Gestor de conta exclusivo',
-      'Treinamento in loco',
-    ],
-    featured: false,
+    badge: "Escala",
+    name: "Agro Enterprise",
+    price: "Sob consulta",
+    period: "",
+    features: ["Monitoramento ilimitado", "Relatórios em tempo real", "API de integração", "Gestor de conta"],
   },
 ];
 
 export default function Plans() {
-  const ref = useReveal();
-
   return (
-    <section className="pricing" id="planos" ref={ref}>
+    <section className="section-shell pricing" id="planos">
       <div className="container">
-        <div className="section-header reveal">
-          <span className="tag">Planos e preços</span>
-          <h2>Escolha o plano <span>ideal para você</span></h2>
-          <p>Planos flexíveis que se adaptam às suas necessidades</p>
+        <div className="section-header">
+          <span className="section-eyebrow">Planos</span>
+          <h2 className="section-title">Planos para começar pequeno e escalar com segurança</h2>
+          <p className="section-copy">Escolha a cobertura ideal para o tamanho e maturidade digital da sua operação.</p>
         </div>
 
         <div className="pricing-grid">
-          {PLANS.map((p, i) => (
-            <div
-              key={i}
-              className={`pricing-card${p.featured ? ' featured' : ''} reveal`}
-              style={{ transitionDelay: `${i * 0.12}s` }}
-            >
-              {p.featured && <div className="featured-crown">⭐ Recomendado</div>}
-              <div className="pricing-badge">{p.badge}</div>
-              <div className="pricing-name">{p.name}</div>
-
+          {PLANS.map((plan) => (
+            <article className={`pricing-card motion-card${plan.featured ? " featured" : ""}`} key={plan.name}>
+              {plan.featured && <span className="featured-crown">Recomendado</span>}
+              <span className="pricing-badge">{plan.badge}</span>
+              <h3>{plan.name}</h3>
               <div className="pricing-price">
-                <span className="value">{p.price}</span>
-                {p.period && <span className="period">{p.period}</span>}
+                <strong>{plan.price}</strong>
+                <span>{plan.period}</span>
               </div>
-
-              <div className="pricing-divider" />
-
-              <ul className="pricing-features-list">
-                {p.features.map((f, j) => (
-                  <li key={j} className="pricing-feature">{f}</li>
-                ))}
+              <ul>
+                {plan.features.map((feature) => <li key={feature}>{feature}</li>)}
               </ul>
-
-              <a
-                href="https://wa.me/5519999999999"
-                className={`pricing-cta ${p.featured ? 'filled' : 'outline'}`}
-              >
-                {p.name === 'Agro Enterprise' ? 'Fale conosco' : 'Assinar agora'}
+              <a href="https://wa.me/5519999999999" className={`btn ${plan.featured ? "btn-primary" : "btn-secondary"}`}>
+                {plan.price === "Sob consulta" ? "Fale conosco" : "Assinar agora"}
               </a>
-            </div>
+            </article>
           ))}
         </div>
       </div>

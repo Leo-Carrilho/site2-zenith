@@ -1,56 +1,46 @@
-// components/Depoiments.jsx
-import { useReveal } from '../hooks/useReveal';
-
 const TESTIMONIALS = [
   {
-    text: 'Com a Zenith aumentamos a produtividade em 40% e reduzimos perdas. O monitoramento por drones revolucionou nossa gestão.',
-    author: 'João Silva',
-    loc: 'Fazenda Santa Maria, SP',
-    initial: 'J',
+    text: "Com a Zenith conseguimos enxergar problemas antes da colheita sentir. A decisão ficou mais rápida e muito mais segura.",
+    author: "João Silva",
+    role: "Produtor rural, SP",
+    initial: "J",
   },
   {
-    text: 'A análise de dados nos ajudou a economizar 30% em insumos. A precisão é impressionante e o suporte está sempre disponível.',
-    author: 'Maria Oliveira',
-    loc: 'Agropecuária Boa Vista, MG',
-    initial: 'M',
+    text: "A IA ajudou a reduzir desperdício de insumos e deixou os relatórios fáceis de explicar para a equipe de campo.",
+    author: "Maria Oliveira",
+    role: "Gestora agrícola, MG",
+    initial: "M",
   },
   {
-    text: 'Melhor investimento que fizemos. A plataforma é intuitiva e os relatórios gerados pela IA são extremamente valiosos.',
-    author: 'Carlos Mendes',
-    loc: 'Sítio São Pedro, MG',
-    initial: 'C',
+    text: "O valor está na clareza. Em poucos minutos entendemos onde agir e o que pode esperar.",
+    author: "Carlos Mendes",
+    role: "Agricultor familiar, MG",
+    initial: "C",
   },
 ];
 
 export default function Depoiments() {
-  const ref = useReveal();
-
   return (
-    <section className="depoimentos" ref={ref}>
+    <section className="section-shell depoimentos">
       <div className="container">
-        <div className="section-header reveal">
-          <span className="tag">O que dizem nossos clientes</span>
-          <h2>Histórias de <span>sucesso</span></h2>
+        <div className="section-header">
+          <span className="section-eyebrow">Depoimentos</span>
+          <h2 className="section-title">Confiança construída em cada recomendação</h2>
         </div>
 
         <div className="depo-grid">
-          {TESTIMONIALS.map((t, i) => (
-            <div
-              key={i}
-              className="depo-card reveal"
-              style={{ transitionDelay: `${i * 0.12}s` }}
-            >
-              <div className="depo-stars">★★★★★</div>
-              <div className="depo-quote">"</div>
-              <p className="depo-text">{t.text}</p>
+          {TESTIMONIALS.map((item) => (
+            <article className="depo-card motion-card" key={item.author}>
+              <div className="depo-stars" aria-label="5 estrelas">★★★★★</div>
+              <p>{item.text}</p>
               <div className="depo-author">
-                <div className="depo-avatar">{t.initial}</div>
+                <span className="depo-avatar">{item.initial}</span>
                 <div>
-                  <div className="depo-name">{t.author}</div>
-                  <div className="depo-loc">{t.loc}</div>
+                  <strong>{item.author}</strong>
+                  <span>{item.role}</span>
                 </div>
               </div>
-            </div>
+            </article>
           ))}
         </div>
       </div>

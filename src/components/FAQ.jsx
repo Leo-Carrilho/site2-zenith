@@ -1,53 +1,44 @@
-// components/FAQ.jsx
-import { useState } from 'react';
-import { useReveal } from '../hooks/useReveal';
+import { useState } from "react";
 
 const FAQS = [
   {
-    q: 'Como funciona o monitoramento por drones?',
-    a: 'Nossos drones sobrevoam sua propriedade capturando imagens multiespectrais. A IA processa os dados identificando áreas de estresse, pragas e necessidade de irrigação, gerando relatórios detalhados automaticamente.',
+    q: "Preciso comprar drones?",
+    a: "Não. O serviço pode ser contratado com operação, análise e relatórios entregues pela Zenith.",
   },
   {
-    q: 'Preciso comprar os drones?',
-    a: 'Não! Realizamos todo o serviço com nossos próprios equipamentos. Você contrata o plano e recebe relatórios e análises prontos, sem nenhum investimento em hardware.',
+    q: "A IA substitui um agrônomo?",
+    a: "Não. Ela acelera diagnóstico e priorização, apoiando o produtor e a equipe técnica com dados mais claros.",
   },
   {
-    q: 'Qual a periodicidade do monitoramento?',
-    a: 'O monitoramento pode ser semanal, quinzenal ou mensal, conforme sua necessidade e o plano contratado. Também oferecemos missões sob demanda para situações emergenciais.',
+    q: "Qual a frequência do monitoramento?",
+    a: "Pode ser mensal, quinzenal, semanal ou sob demanda, conforme cultura, área e objetivo da safra.",
   },
   {
-    q: 'Atendem todo o Brasil?',
-    a: 'Atualmente cobrimos toda a região Sudeste, com planos de expansão para outras regiões em breve. Entre em contato para verificar a disponibilidade na sua área.',
+    q: "Como recebo os relatórios?",
+    a: "Pelo app, pela plataforma web e também com apoio da equipe para interpretar recomendações importantes.",
   },
 ];
 
 export default function FAQ() {
-  const [open, setOpen] = useState(null);
-  const ref = useReveal();
+  const [open, setOpen] = useState(0);
 
   return (
-    <section className="faq" ref={ref}>
+    <section className="section-shell faq">
       <div className="container">
-        <div className="section-header reveal">
-          <span className="tag">Dúvidas frequentes</span>
-          <h2>Perguntas <span>frequentes</span></h2>
+        <div className="section-header">
+          <span className="section-eyebrow">FAQ</span>
+          <h2 className="section-title">Perguntas frequentes</h2>
         </div>
 
         <div className="faq-list">
-          {FAQS.map((f, i) => (
-            <div
-              key={i}
-              className={`faq-item reveal${open === i ? ' open' : ''}`}
-              style={{ transitionDelay: `${i * 0.08}s` }}
-            >
-              <div className="faq-q" onClick={() => setOpen(open === i ? null : i)}>
-                {f.q}
-                <div className="faq-arrow">+</div>
-              </div>
-              {open === i && (
-                <div className="faq-a">{f.a}</div>
-              )}
-            </div>
+          {FAQS.map((item, index) => (
+            <article className={`faq-item motion-card${open === index ? " open" : ""}`} key={item.q}>
+              <button className="faq-q" type="button" onClick={() => setOpen(open === index ? null : index)}>
+                <span>{item.q}</span>
+                <span className="faq-arrow">+</span>
+              </button>
+              {open === index && <p className="faq-a">{item.a}</p>}
+            </article>
           ))}
         </div>
       </div>
