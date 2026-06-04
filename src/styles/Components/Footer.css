@@ -1,0 +1,77 @@
+.footer {
+  padding: 70px 0 34px;
+  border-top: 1px solid var(--border);
+  background: rgba(10,26,15,.66);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr repeat(3, 1fr);
+  gap: 34px;
+}
+
+.footer-brand .nav-logo-mark {
+  margin-bottom: 18px;
+}
+
+.footer h2,
+.footer h3 {
+  margin: 0 0 12px;
+}
+
+.footer h3 {
+  color: var(--text-primary);
+  font-size: .9rem;
+  text-transform: uppercase;
+}
+
+.footer p,
+.footer a,
+.footer span {
+  color: var(--text-secondary);
+}
+
+.footer-col {
+  display: grid;
+  align-content: start;
+  gap: 9px;
+}
+
+.footer a:hover {
+  color: var(--accent-light);
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 50px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.footer-bottom div {
+  display: flex;
+  gap: 18px;
+}
+
+@media (max-width: 1120px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-bottom div {
+    justify-content: center;
+  }
+}

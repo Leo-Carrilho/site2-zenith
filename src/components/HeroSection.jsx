@@ -19,11 +19,22 @@ const BARS = [
 
 export default function HeroSection() {
   const heroRef = useRef(null);
+  const videoRef = useRef(null);
   const magneticRef = useRef(null);
 
   useEffect(() => {
+    const video = videoRef.current;
+    const setSlowMotion = () => {
+      if (video) video.playbackRate = 0.55;
+    };
+
+    setSlowMotion();
+    video?.addEventListener("loadedmetadata", setSlowMotion);
+
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduceMotion) return undefined;
+    if (reduceMotion) {
+      return () => video?.removeEventListener("loadedmetadata", setSlowMotion);
+    }
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
@@ -86,6 +97,7 @@ export default function HeroSection() {
 
     return () => {
       ctx.revert();
+      video?.removeEventListener("loadedmetadata", setSlowMotion);
       button?.removeEventListener("mousemove", onMove);
       button?.removeEventListener("mouseleave", onLeave);
     };
@@ -103,7 +115,7 @@ export default function HeroSection() {
   return (
     <section className="hero" id="hero" ref={heroRef}>
       <div className="hero-bg-video" aria-hidden="true">
-        <video autoPlay muted loop playsInline>
+        <video autoPlay muted loop playsInline ref={videoRef}>
           <source src="/assets/videos/videoDrone.mp4" type="video/mp4" />
         </video>
       </div>
@@ -118,7 +130,7 @@ export default function HeroSection() {
           </div>
 
           <h1 className="hero-title">
-            IA para impulsionar pequenos e médios produtores rurais
+            Sua precisão agrícola no ponto mais alto
           </h1>
 
           <p className="hero-desc">
@@ -140,16 +152,16 @@ export default function HeroSection() {
 
           <div className="hero-stats" aria-label="Indicadores Zenith Agro">
             <div className="hero-stat">
-              <strong><span className="count" data-prefix="+" data-target="500" /> ha</strong>
+              <strong><span className="count" data-prefix="+" data-target="500" />+500 ha</strong>
               <span>monitorados</span>
             </div>
             <div className="hero-stat">
-              <strong><span className="count" data-target="98" data-suffix="%" /></strong>
+              <strong><span className="count" data-target="98" data-suffix="%" />95%</strong>
               <span>precisão da IA</span>
             </div>
             <div className="hero-stat">
-              <strong><span className="count" data-prefix="-" data-target="35" data-suffix="%" /></strong>
-              <span>menos custos</span>
+              <strong><span className="count" data-prefix="-" data-target="35" data-suffix="%" />-35%</strong>
+              <span>custos</span>
             </div>
           </div>
         </div>

@@ -3,7 +3,7 @@ import gsap from "gsap";
 import { FaArrowRight } from "react-icons/fa";
 
 const LINKS = [
-  { href: "#hero", label: "Hero" },
+  { href: "#hero", label: "Inicio" },
   { href: "#sobre", label: "Sobre" },
   { href: "#servicos", label: "Funcionalidades" },
   { href: "#beneficios", label: "Benefícios" },
@@ -62,8 +62,7 @@ export default function Header({ onInstallClick }) {
           onClick={(event) => scrollToSection(event, "#hero")}
           aria-label="Zenith Agro - início"
         >
-          <span className="nav-logo-mark" aria-hidden="true">Z</span>
-          <span>Zenith Agro</span>
+          < img src="assets/images/Logo-redonda.png" alt="Logo da Zenith Agro" width="52" height="52" aria-hidden="true" />
         </a>
 
         <nav className="nav-links" aria-label="Navegação principal">
@@ -75,8 +74,8 @@ export default function Header({ onInstallClick }) {
         </nav>
 
         <div className="nav-actions">
-          <a href="#contato" className="btn btn-ghost small" onClick={(event) => scrollToSection(event, "#contato")}>
-            Demo
+          <a href="https://zenith-desktop2.vercel.app" className="btn btn-ghost small">
+            Acessar App <FaArrowRight />
           </a>
           <button className="btn btn-primary small" onClick={handleInstall} type="button">
             Baixar App <FaArrowRight />
