@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FaEnvelope, FaMapMarkerAlt, FaPhoneAlt, FaWhatsapp } from "react-icons/fa";
 
 const INFO_CARDS = [
-  { icon: <FaMapMarkerAlt />, title: "Base", lines: ["Americana - SP", "Interior Paulista"] },
+  { icon: <FaMapMarkerAlt />, title: "Base", lines: ["Americana - SP"] },
   { icon: <FaEnvelope />, title: "E-mail", lines: ["contato@zenith.agr.br"] },
   { icon: <FaPhoneAlt />, title: "Telefone", lines: ["(19) 99999-9999"] },
   { icon: <FaWhatsapp />, title: "WhatsApp", link: { href: "https://wa.me/5519999999999", label: "Enviar mensagem" } },

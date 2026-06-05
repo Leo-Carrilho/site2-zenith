@@ -13,9 +13,9 @@ export default function Footer() {
     <footer className="footer">
       <div className="container footer-grid">
         <div className="footer-brand">
-          <span className="nav-logo-mark">Z</span>
-          <h2>Zenith Agro</h2>
-          <p>IA, drones e dados agrícolas para produtores que querem decidir melhor, mais cedo e com confiança.</p>
+          <img src="assets/images/Logo-redonda.png" width="60" height="60" alt="" />
+          <h2>Zenith</h2>
+          <p>IA, drones e visões computacionais para produtores que querem decidir melhor, mais cedo e com confiança.</p>
         </div>
 
         <div className="footer-col">

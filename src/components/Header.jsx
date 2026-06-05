@@ -50,7 +50,17 @@ export default function Header({ onInstallClick }) {
 
   const handleInstall = () => {
     close();
-    onInstallClick?.();
+    if (onInstallClick) {
+      onInstallClick();
+      return;
+    }
+
+    const isAndroid = /Android/i.test(navigator.userAgent);
+    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+    window.location.href = isAndroid || isIOS
+      ? "https://instalacao-mobile.vercel.app"
+      : "https://Zenith-desktop2.vercel.app";
   };
 
   return (

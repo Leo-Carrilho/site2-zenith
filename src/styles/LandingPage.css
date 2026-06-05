@@ -41,6 +41,7 @@
 html {
   background: var(--g0);
   color: var(--text-primary);
+  font-size: 93.75%;
   overflow-x: hidden;
   scroll-padding-top: 110px;
 }
@@ -187,6 +188,7 @@ section,
 .section-shell {
   position: relative;
   padding: clamp(76px, 10vw, 130px) 0;
+  perspective: 1200px;
 }
 
 .section-header {
@@ -246,6 +248,8 @@ section,
   background: linear-gradient(145deg, rgba(255,255,255,.075), rgba(255,255,255,.035));
   box-shadow: var(--shadow);
   backdrop-filter: blur(12px);
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
 }
 
 .motion-card:hover {

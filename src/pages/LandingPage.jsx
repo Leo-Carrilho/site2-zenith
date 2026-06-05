@@ -23,24 +23,31 @@ export default function LandingPage() {
   useEffect(() => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let lenis;
+    let rafId;
 
     if (!reduceMotion) {
       lenis = new Lenis({
-        duration: 1.2,
+        duration: 1.35,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
         smoothTouch: false,
       });
 
       const raf = (time) => {
         lenis.raf(time);
-        requestAnimationFrame(raf);
+        rafId = requestAnimationFrame(raf);
       };
 
-      requestAnimationFrame(raf);
+      rafId = requestAnimationFrame(raf);
       lenis.on("scroll", ScrollTrigger.update);
     }
 
-    if (reduceMotion) return () => lenis?.destroy();
+    if (reduceMotion) {
+      return () => {
+        if (rafId) cancelAnimationFrame(rafId);
+        lenis?.destroy();
+      };
+    }
 
     const ctx = gsap.context(() => {
       gsap.from(".navbar", {
@@ -51,19 +58,22 @@ export default function LandingPage() {
       });
 
       gsap.utils.toArray(".section-shell").forEach((section) => {
-        const title = section.querySelector(".section-eyebrow, .section-title, .section-copy");
+        const headerItems = section.querySelectorAll(".section-eyebrow, .section-title, .section-copy");
         const cards = section.querySelectorAll(".motion-card, .step-card, .pricing-card, .depo-card, .faq-item, .info-card");
+        const icons = section.querySelectorAll(".card-icon, .step-icon, .pricing-badge, .featured-crown");
+        const probabilityPanel = section.querySelector(".probability-panel");
 
-        if (title) {
-          gsap.from(section.querySelectorAll(".section-eyebrow, .section-title, .section-copy"), {
-            y: 60,
+        if (headerItems.length) {
+          gsap.from(headerItems, {
+            y: 54,
             opacity: 0,
-            duration: 0.9,
-            stagger: 0.09,
-            ease: "power3.out",
+            clipPath: "inset(0 0 100% 0)",
+            duration: 1,
+            stagger: 0.12,
+            ease: "expo.out",
             scrollTrigger: {
               trigger: section,
-              start: "top 78%",
+              start: "top 76%",
               once: true,
             },
           });
@@ -71,19 +81,137 @@ export default function LandingPage() {
 
         if (cards.length) {
           gsap.from(cards, {
-            y: 60,
-            scale: 0.94,
+            y: (index) => 54 + (index % 2) * 18,
+            x: (index) => (index % 2 === 0 ? -18 : 18),
+            rotateX: 8,
+            scale: 0.95,
             opacity: 0,
-            duration: 0.85,
-            stagger: 0.1,
-            ease: "power3.out",
+            transformOrigin: "50% 100%",
+            duration: 1,
+            stagger: { amount: 0.42, from: "start" },
+            ease: "expo.out",
             scrollTrigger: {
               trigger: section,
-              start: "top 72%",
+              start: "top 70%",
+              once: true,
+            },
+          });
+
+          gsap.to(cards, {
+            y: (index) => (index % 2 === 0 ? -18 : -28),
+            ease: "none",
+            scrollTrigger: {
+              trigger: section,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1.1,
+            },
+          });
+        }
+
+        if (icons.length) {
+          gsap.from(icons, {
+            scale: 0.72,
+            rotate: -10,
+            opacity: 0,
+            duration: 0.85,
+            stagger: 0.07,
+            ease: "back.out(1.8)",
+            scrollTrigger: {
+              trigger: section,
+              start: "top 68%",
               once: true,
             },
           });
         }
+
+        if (probabilityPanel) {
+          gsap.fromTo(probabilityPanel, {
+            y: 260,
+            opacity: 0,
+            scale: 0.9,
+            rotateX: 18,
+            clipPath: "inset(100% 0 0 0)",
+          }, {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            rotateX: 0,
+            clipPath: "inset(0% 0 0 0)",
+            transformOrigin: "50% 100%",
+            duration: 1.25,
+            ease: "expo.out",
+            scrollTrigger: {
+              trigger: section,
+              start: "top 58%",
+              once: true,
+            },
+          });
+
+          gsap.fromTo(probabilityPanel.querySelectorAll(".probability-row"), {
+            y: 42,
+            opacity: 0,
+          }, {
+            y: 0,
+            opacity: 1,
+            duration: 0.7,
+            delay: 0.45,
+            stagger: 0.1,
+            ease: "power4.out",
+            scrollTrigger: {
+              trigger: section,
+              start: "top 58%",
+              once: true,
+            },
+          });
+        }
+      });
+
+      gsap.utils.toArray(".timeline").forEach((timeline) => {
+        gsap.fromTo(timeline, { "--timeline-progress": "0%" }, {
+          "--timeline-progress": "100%",
+          ease: "none",
+          scrollTrigger: {
+            trigger: timeline,
+            start: "top 74%",
+            end: "bottom 42%",
+            scrub: 0.8,
+          },
+        });
+      });
+
+      gsap.utils.toArray(".analysis-target").forEach((target, index) => {
+        gsap.to(target, {
+          scale: 1.35,
+          opacity: 0.35,
+          duration: 1.8,
+          repeat: -1,
+          yoyo: true,
+          delay: index * 0.2,
+          ease: "sine.inOut",
+        });
+      });
+
+      gsap.to(".ai-card-glow", {
+        yPercent: -16,
+        xPercent: 12,
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".ai-section",
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1,
+        },
+      });
+
+      gsap.to(".bento-visual span", {
+        y: -18,
+        rotate: 10,
+        stagger: 0.12,
+        duration: 2.2,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
       });
 
       gsap.to(".ambient-orb.one", {
@@ -103,10 +231,24 @@ export default function LandingPage() {
         yoyo: true,
         ease: "sine.inOut",
       });
+
+      gsap.to(".ambient-grid", {
+        yPercent: 8,
+        ease: "none",
+        scrollTrigger: {
+          trigger: document.body,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 1.4,
+        },
+      });
+
+      ScrollTrigger.refresh();
     });
 
     return () => {
       ctx.revert();
+      if (rafId) cancelAnimationFrame(rafId);
       lenis?.destroy();
     };
   }, []);

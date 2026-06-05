@@ -2,29 +2,71 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
+  align-items: stretch;
 }
 
 .depo-card {
   position: relative;
   min-width: 0;
-  min-height: 280px;
-  padding: 28px;
+  min-height: 250px;
+  padding: 24px;
   overflow: hidden;
   transition: var(--transition);
 }
 
-.depo-stars {
+.depo-card::before {
+  content: "";
+  position: absolute;
+  right: 24px;
+  top: 28px;
+  width: 54px;
+  height: 42px;
+  border-radius: 14px;
+  background:
+    linear-gradient(90deg, rgba(102,187,106,.12) 0 42%, transparent 42% 58%, rgba(102,187,106,.12) 58%),
+    linear-gradient(180deg, rgba(102,187,106,.08), rgba(102,187,106,.02));
+  opacity: .7;
+}
+
+.depo-top {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   margin-bottom: 22px;
+}
+
+.depo-stars {
+  display: inline-flex;
+  padding: 7px 10px;
+  border: 1px solid rgba(102,187,106,.18);
+  border-radius: 999px;
+  background: rgba(76,175,80,.08);
   color: var(--accent-light);
+  font-size: .82rem;
   letter-spacing: 0;
 }
 
-.depo-card p {
+.depo-score {
   color: var(--text-secondary);
-  font-size: 1.02rem;
+  font-size: .82rem;
+  font-weight: 800;
+}
+
+.depo-card p {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: .98rem;
+  line-height: 1.72;
 }
 
 .depo-author {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -33,21 +75,26 @@
 
 .depo-avatar {
   display: grid;
-  width: 46px;
-  height: 46px;
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
   place-items: center;
+  border: 1px solid rgba(102,187,106,.22);
   border-radius: 50%;
   background: linear-gradient(135deg, var(--g4), var(--accent));
+  color: var(--text-primary);
   font-weight: 900;
+  box-shadow: 0 0 24px rgba(76,175,80,.18);
 }
 
 .depo-author strong,
-.depo-author span {
+.depo-author div span {
   display: block;
 }
 
-.depo-author span {
+.depo-author div span {
   color: var(--text-secondary);
+  font-size: .86rem;
 }
 
 @media (max-width: 1120px) {
@@ -62,6 +109,7 @@
   }
 
   .depo-card {
+    min-height: auto;
     padding: 22px;
     border-radius: 22px;
   }

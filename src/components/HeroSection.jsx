@@ -11,12 +11,6 @@ const METRICS = [
   { label: "Área mapeada", value: "4.2 km", tone: "strong" },
 ];
 
-const BARS = [
-  { label: "Vitalidade", pct: 82 },
-  { label: "Umidade", pct: 67 },
-  { label: "Irrigação", pct: 74 },
-];
-
 export default function HeroSection() {
   const heroRef = useRef(null);
   const videoRef = useRef(null);
@@ -44,10 +38,10 @@ export default function HeroSection() {
         .from(".hero-desc", { y: 32, opacity: 0, duration: 0.85 }, "-=0.5")
         .from(".hero-actions", { y: 28, opacity: 0, duration: 0.75 }, "-=0.45")
         .from(".hero-stat", { y: 24, opacity: 0, stagger: 0.1, duration: 0.7 }, "-=0.35")
-        .from(".dashboard-card", { x: 70, scale: 0.94, opacity: 0, duration: 1 }, "-=0.75")
+        .from(".drone-monitor", { x: 70, scale: 0.94, opacity: 0, duration: 1 }, "-=0.75")
         .from(".floating-chip", { y: 40, opacity: 0, stagger: 0.12, duration: 0.7 }, "-=0.45");
 
-      gsap.to(".dashboard-card", {
+      gsap.to(".drone-monitor", {
         y: -22,
         scrollTrigger: {
           trigger: heroRef.current,
@@ -168,13 +162,6 @@ export default function HeroSection() {
 
         <div className="hero-visual" aria-label="Mockup do dashboard Zenith Agro">
           <div className="hero-orbit" aria-hidden="true" />
-          <div className="floating-chip chip-alert">
-            <FaBrain />
-            <div>
-              <span>Alerta IA</span>
-              <strong>Talhão 03 estável</strong>
-            </div>
-          </div>
           <div className="floating-chip chip-yield">
             <span className="mini-spark" />
             <div>
@@ -182,45 +169,50 @@ export default function HeroSection() {
               <strong>+32% na safra</strong>
             </div>
           </div>
+          <div className="drone-monitor" aria-hidden="true">
+            <div className="sky-grid" />
+            <span className="flight-arc" />
+            <span className="signal-dot dot-one" />
+            <span className="signal-dot dot-two" />
+            <span className="signal-dot dot-three" />
+            <div className="drone-unit">
+              <img src="/assets/images/drone-hero.png" alt="" className="drone-image" />
+              <span className="drone-sensor" />
+            </div>
+            <span className="drone-shadow" />
 
-          <div className="dashboard-card motion-card">
-            <div className="dashboard-top">
-              <div>
-                <span>Zenith Command</span>
-                <strong>Missão Agro 04</strong>
-              </div>
-              <div className="status-pill">Ao vivo</div>
+            <div className="scan-cone">
+              <span className="scan-band band-one" />
+              <span className="scan-band band-two" />
+              <span className="scan-band band-three" />
             </div>
 
-            <div className="field-map">
-              <div className="scan-line" />
-              <span className="map-pin one" />
-              <span className="map-pin two" />
-              <span className="map-pin three" />
-              <p>Mapa inteligente da lavoura</p>
-            </div>
-
-            <div className="metric-grid">
-              {METRICS.map((metric) => (
-                <div className={`metric-card ${metric.tone}`} key={metric.label}>
-                  <span>{metric.label}</span>
-                  <strong>{metric.value}</strong>
-                </div>
+            <div className="crop-field">
+              <span className="field-row row-one" />
+              <span className="field-row row-two" />
+              <span className="field-row row-three" />
+              <span className="field-row row-four" />
+              {Array.from({ length: 28 }, (_, index) => (
+                <span className={`soy-plant plant-${index + 1}`} key={`soy-plant-${index + 1}`} />
               ))}
+              <span className="field-hotspot hotspot-one" />
+              <span className="field-hotspot hotspot-two" />
+              <span className="field-hotspot hotspot-three" />
+              <span className="scan-target scan-target-one" />
+              <span className="scan-target scan-target-two" />
             </div>
 
-            <div className="analysis-list">
-              {BARS.map((bar) => (
-                <div className="analysis-row" key={bar.label}>
-                  <div>
-                    <span>{bar.label}</span>
-                    <strong>{bar.pct}%</strong>
-                  </div>
-                  <div className="bar-track">
-                    <span style={{ width: `${bar.pct}%` }} />
-                  </div>
-                </div>
-              ))}
+            <div className="drone-data data-main">
+              <span>{METRICS[0].label}</span>
+              <strong>{METRICS[0].value}</strong>
+            </div>
+            <div className="drone-data data-risk">
+              <span>{METRICS[1].label}</span>
+              <strong>{METRICS[1].value}</strong>
+            </div>
+            <div className="drone-data data-area">
+              <span>{METRICS[2].label}</span>
+              <strong>{METRICS[2].value}</strong>
             </div>
           </div>
         </div>

@@ -1,65 +1,97 @@
 .timeline {
   position: relative;
   display: grid;
+  --timeline-progress: 0%;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 14px;
+  gap: 10px;
+  align-items: stretch;
 }
 
 .timeline::before {
   content: "";
   position: absolute;
-  top: 52px;
+  top: 33px;
   left: 8%;
   right: 8%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(102,187,106,.42), transparent);
+  background:
+    linear-gradient(90deg, rgba(102,187,106,.8), rgba(102,187,106,.22)) left / var(--timeline-progress) 100% no-repeat,
+    linear-gradient(90deg, transparent, rgba(255,255,255,.16), transparent);
+  box-shadow: 0 0 18px rgba(102,187,106,.3);
 }
 
 .step-card {
   position: relative;
   z-index: 1;
   min-width: 0;
-  padding: 28px;
+  min-height: 190px;
+  padding: 18px;
   overflow: hidden;
   text-align: left;
   transition: var(--transition);
 }
 
+.step-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,.035), transparent 42%);
+  pointer-events: none;
+}
+
 .step-card h3 {
-  margin: 0 0 10px;
+  margin: 14px 0 8px;
   color: var(--text-primary);
-  font-size: 1.2rem;
+  font-size: 1rem;
+  line-height: 1.15;
 }
 
 .step-card p {
+  margin: 0;
   color: var(--text-secondary);
+  font-size: .86rem;
+  line-height: 1.55;
 }
 
 .step-num {
   display: inline-grid;
-  min-width: 44px;
-  height: 44px;
-  margin-bottom: 22px;
+  min-width: 34px;
+  height: 34px;
   place-items: center;
+  border: 1px solid rgba(102,187,106,.22);
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--g4), var(--accent));
+  background: rgba(76,175,80,.12);
   color: var(--text-primary);
+  font-size: .78rem;
   font-weight: 900;
+  box-shadow: 0 0 18px rgba(102,187,106,.12);
 }
 
 .step-icon {
-  margin-bottom: 14px;
+  display: grid;
+  width: 34px;
+  height: 34px;
+  margin-top: 16px;
+  place-items: center;
+  border-radius: 12px;
+  background: rgba(102,187,106,.1);
   color: var(--accent-light);
-  font-size: 1.4rem;
+  font-size: 1rem;
 }
 
 .step-card.result {
   background: linear-gradient(145deg, rgba(76,175,80,.18), rgba(255,255,255,.04));
 }
 
+.step-card.result .step-num {
+  background: linear-gradient(135deg, var(--accent), var(--accent-light));
+  color: var(--g0);
+}
+
 @media (max-width: 1120px) {
   .timeline {
     grid-template-columns: 1fr 1fr;
+    gap: 12px;
   }
 
   .timeline::before {
@@ -70,10 +102,16 @@
 @media (max-width: 700px) {
   .timeline {
     grid-template-columns: 1fr;
+    gap: 10px;
   }
 
   .step-card {
-    padding: 22px;
-    border-radius: 22px;
+    min-height: auto;
+    padding: 16px;
+    border-radius: 18px;
+  }
+
+  .step-card h3 {
+    margin-top: 12px;
   }
 }

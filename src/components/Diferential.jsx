@@ -1,5 +1,12 @@
 import { FaClock, FaLeaf, FaShieldAlt, FaUsers } from "react-icons/fa";
 
+const PROBABILITIES = [
+  { label: "Doença de ferrugem", value: 100 },
+  { label: "Ataque de lagarta", value: 0 },
+  { label: "Cercóspora", value: 0 },
+  { label: "Soja saudável", value: 0 },
+];
+
 const ITEMS = [
   {
     icon: <FaShieldAlt />,
@@ -45,6 +52,28 @@ export default function Diferential() {
               <div className="card-icon">{item.icon}</div>
               <h3>{item.title}</h3>
               <p>{item.desc}</p>
+              {item.title === "Confiabilidade operacional" && (
+                <div className="probability-panel" aria-label="Distribuição de probabilidade de doença ou praga">
+                  <div className="probability-heading">
+                    <span className="probability-ring" />
+                    <strong>Distribuição de probabilidade</strong>
+                  </div>
+                  <div className="probability-list">
+                    {PROBABILITIES.map((item) => (
+                      <div className="probability-row" key={item.label}>
+                        <div className="probability-label">
+                          <FaLeaf />
+                          <span>{item.label}</span>
+                        </div>
+                        <div className="probability-meter">
+                          <span style={{ width: `${item.value}%` }} />
+                        </div>
+                        <strong>{item.value}%</strong>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
               <div className="bento-visual" aria-hidden="true">
                 <span />
                 <span />

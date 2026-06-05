@@ -30,16 +30,31 @@ export default function FAQ() {
           <h2 className="section-title">Perguntas frequentes</h2>
         </div>
 
-        <div className="faq-list">
-          {FAQS.map((item, index) => (
-            <article className={`faq-item motion-card${open === index ? " open" : ""}`} key={item.q}>
-              <button className="faq-q" type="button" onClick={() => setOpen(open === index ? null : index)}>
-                <span>{item.q}</span>
-                <span className="faq-arrow">+</span>
-              </button>
-              {open === index && <p className="faq-a">{item.a}</p>}
-            </article>
-          ))}
+        <div className="faq-shell">
+          <aside className="faq-aside motion-card">
+            <span>Suporte Zenith</span>
+            <strong>Antes de contratar, entenda o essencial.</strong>
+            <p>As respostas mais comuns sobre operação, IA, frequência de voo e entrega dos relatórios.</p>
+          </aside>
+
+          <div className="faq-list">
+            {FAQS.map((item, index) => (
+              <article className={`faq-item motion-card${open === index ? " open" : ""}`} key={item.q}>
+                <button
+                  className="faq-q"
+                  type="button"
+                  onClick={() => setOpen(open === index ? null : index)}
+                  aria-expanded={open === index}
+                >
+                  <span>{item.q}</span>
+                  <span className="faq-arrow">+</span>
+                </button>
+                <div className="faq-a-wrap">
+                  <p className="faq-a">{item.a}</p>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </div>
     </section>

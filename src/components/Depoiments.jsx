@@ -31,7 +31,10 @@ export default function Depoiments() {
         <div className="depo-grid">
           {TESTIMONIALS.map((item) => (
             <article className="depo-card motion-card" key={item.author}>
-              <div className="depo-stars" aria-label="5 estrelas">★★★★★</div>
+              <div className="depo-top">
+                <div className="depo-stars" aria-label="5 estrelas">★★★★★</div>
+                <span className="depo-score">5.0</span>
+              </div>
               <p>{item.text}</p>
               <div className="depo-author">
                 <span className="depo-avatar">{item.initial}</span>

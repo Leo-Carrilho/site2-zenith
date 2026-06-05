@@ -32,6 +32,103 @@
   color: var(--text-secondary);
 }
 
+.probability-panel {
+  position: relative;
+  z-index: 2;
+  max-width: 430px;
+  margin-top: 26px;
+  padding: 18px;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 22px;
+  background: rgba(5,12,8,.42);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.04), 0 18px 36px rgba(0,0,0,.22);
+  backdrop-filter: blur(12px);
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+  clip-path: inset(0 0 0 0);
+}
+
+.probability-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.probability-heading strong {
+  color: var(--text-primary);
+  font-size: .82rem;
+  font-weight: 900;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.probability-ring {
+  width: 24px;
+  height: 24px;
+  border: 4px solid rgba(102,187,106,.22);
+  border-top-color: #00f5a0;
+  border-right-color: #00f5a0;
+  border-radius: 50%;
+  animation: probability-spin 2.8s linear infinite;
+}
+
+.probability-list {
+  display: grid;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.probability-row {
+  display: grid;
+  grid-template-columns: minmax(140px, 1fr) minmax(110px, 1.25fr) 48px;
+  gap: 12px;
+  align-items: center;
+}
+
+.probability-label {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+  color: var(--text-secondary);
+  font-size: .86rem;
+}
+
+.probability-label svg {
+  flex: 0 0 auto;
+  color: #00f5a0;
+  font-size: .88rem;
+}
+
+.probability-label span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.probability-meter {
+  height: 7px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255,255,255,.08);
+}
+
+.probability-meter span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #00f5a0, var(--accent-light));
+  box-shadow: 0 0 16px rgba(0,245,160,.4);
+}
+
+.probability-row > strong {
+  color: #00f5a0;
+  font-size: .9rem;
+  text-align: right;
+}
+
 .bento-visual {
   position: absolute;
   right: 24px;
@@ -53,6 +150,10 @@
 .bento-visual span:nth-child(2) { height: 82px; }
 .bento-visual span:nth-child(3) { height: 60px; }
 
+@keyframes probability-spin {
+  to { transform: rotate(360deg); }
+}
+
 @media (max-width: 1120px) {
   .bento-grid {
     grid-template-columns: 1fr 1fr;
@@ -73,5 +174,18 @@
   .bento-card.wide {
     grid-column: span 1;
     min-height: auto;
+  }
+
+  .probability-panel {
+    max-width: none;
+    padding: 16px;
+  }
+
+  .probability-row {
+    grid-template-columns: 1fr 46px;
+  }
+
+  .probability-label {
+    grid-column: 1 / -1;
   }
 }
