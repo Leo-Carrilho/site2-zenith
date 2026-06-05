@@ -103,14 +103,29 @@
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 860px) {
   .depo-grid {
     grid-template-columns: 1fr;
+    max-width: 620px;
+    margin: 0 auto;
   }
+}
 
+@media (max-width: 700px) {
   .depo-card {
     min-height: auto;
     padding: 22px;
     border-radius: 22px;
+  }
+}
+
+@media (max-width: 390px) {
+  .depo-top {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .depo-author {
+    align-items: flex-start;
   }
 }

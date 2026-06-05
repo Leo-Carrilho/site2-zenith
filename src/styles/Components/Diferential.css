@@ -160,6 +160,21 @@
   }
 }
 
+@media (max-width: 900px) {
+  .bento-card.large,
+  .bento-card.wide {
+    grid-column: span 2;
+  }
+
+  .probability-row {
+    grid-template-columns: 1fr 46px;
+  }
+
+  .probability-label {
+    grid-column: 1 / -1;
+  }
+}
+
 @media (max-width: 700px) {
   .bento-grid {
     grid-template-columns: 1fr;
@@ -180,12 +195,14 @@
     max-width: none;
     padding: 16px;
   }
+}
 
-  .probability-row {
-    grid-template-columns: 1fr 46px;
+@media (max-width: 390px) {
+  .probability-heading strong {
+    font-size: .72rem;
   }
 
   .probability-label {
-    grid-column: 1 / -1;
+    font-size: .8rem;
   }
 }

@@ -139,7 +139,7 @@ export default function HeroSection() {
             <a href="https://zenith-desktop2.vercel.app" className="btn btn-secondary">
               Acessar plataforma <FaArrowRight />
             </a>
-            <a href="https://wa.me/5519999999999" className="btn btn-ghost">
+            <a href="https://wa.me/5519999999999" className="btn btn-whatsapp">
               <FaWhatsapp /> WhatsApp
             </a>
           </div>

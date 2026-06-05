@@ -148,8 +148,10 @@ section,
   border-radius: var(--radius);
   font-weight: 800;
   line-height: 1;
+  text-align: center;
   transition: var(--transition);
   user-select: none;
+  white-space: nowrap;
 }
 
 .btn.small {
@@ -224,7 +226,7 @@ section,
 .section-title {
   max-width: 850px;
   margin: 16px auto 12px;
-  font-size: clamp(2rem, 5vw, 3.35rem);
+  font-size: clamp(1.9rem, 4.6vw, 3.35rem);
   font-weight: 900;
   letter-spacing: 0;
   line-height: 1.08;
@@ -238,7 +240,7 @@ section,
 .section-copy {
   max-width: 62ch;
   color: var(--text-secondary);
-  font-size: clamp(1rem, 4vw, 1.25rem);
+  font-size: clamp(.96rem, 2.4vw, 1.18rem);
   line-height: 1.75;
 }
 
@@ -300,11 +302,24 @@ section,
   }
 
   .section-shell {
-    padding: 76px 0;
+    padding: 64px 0;
   }
 
   .section-header {
     margin-bottom: 30px;
+  }
+
+  .section-title {
+    font-size: clamp(1.7rem, 8vw, 2.35rem);
+  }
+
+  .section-copy {
+    font-size: .98rem;
+  }
+
+  .btn {
+    min-height: 48px;
+    white-space: normal;
   }
 }
 
@@ -315,6 +330,17 @@ section,
 
   .btn {
     padding-inline: 16px;
+  }
+
+  .section-shell {
+    padding: 56px 0;
+  }
+}
+
+@media (hover: none) {
+  .motion-card:hover,
+  .btn:hover {
+    transform: none;
   }
 }
 

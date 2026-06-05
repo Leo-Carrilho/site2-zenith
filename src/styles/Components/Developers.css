@@ -374,6 +374,17 @@
 @media (max-width: 1120px) {
   .ai-card {
     grid-template-columns: 1fr;
+    max-width: 680px;
+  }
+}
+
+@media (max-width: 860px) {
+  .ai-card {
+    max-width: 100%;
+  }
+
+  .analysis-status-row {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -394,13 +405,13 @@
   }
 
   .analysis-preview {
-    min-height: 220px;
+    min-height: clamp(170px, 52vw, 220px);
     margin: 18px 16px;
     border-radius: 18px;
   }
 
   .analysis-preview img {
-    min-height: 220px;
+    min-height: clamp(170px, 52vw, 220px);
   }
 
   .analysis-status-row,
@@ -412,5 +423,20 @@
   .analysis-status-row,
   .analysis-actions {
     padding-inline: 16px;
+  }
+}
+
+@media (max-width: 390px) {
+  .ai-card {
+    padding: 8px;
+    border-radius: 22px;
+  }
+
+  .ai-panel-top {
+    padding: 12px;
+  }
+
+  .analysis-actions {
+    gap: 8px;
   }
 }

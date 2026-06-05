@@ -136,6 +136,18 @@
   border-radius: 50%;
 }
 
+.btn-whatsapp{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border: 1px solid #00ff90 !important;
+  border-radius: var(--radius);
+  background: rgba(76, 175, 120, 0);
+  color: #00ff90 !important;
+  font-weight: 600;
+}
+
 .drone-monitor {
   position: relative;
   z-index: 2;
@@ -692,6 +704,24 @@
   }
 }
 
+@media (max-width: 900px) {
+  .hero-title {
+    font-size: clamp(2.2rem, 8vw, 3.4rem);
+  }
+
+  .hero-desc {
+    font-size: .98rem;
+  }
+
+  .hero-stats {
+    max-width: 560px;
+  }
+
+  .hero-stat strong {
+    font-size: 1.55rem;
+  }
+}
+
 @media (max-width: 700px) {
   .hero-inner {
     min-height: auto;
@@ -713,6 +743,7 @@
 
   .hero-stat {
     min-height: 88px;
+    padding: 16px;
   }
 
   .floating-chip,
@@ -721,7 +752,7 @@
   }
 
   .drone-monitor {
-    min-height: 430px;
+    min-height: clamp(340px, 92vw, 430px);
     border-radius: 24px;
   }
 
@@ -739,6 +770,7 @@
   .drone-data {
     min-width: 118px;
     padding: 10px 11px;
+    font-size: .88rem;
   }
 
   .data-main {
@@ -758,19 +790,63 @@
 }
 
 @media (max-width: 390px) {
+  .hero-kicker {
+    max-width: 100%;
+    justify-content: center;
+    white-space: normal;
+  }
+
+  .hero-title {
+    margin: 18px 0;
+    font-size: clamp(1.9rem, 10vw, 2.3rem);
+  }
+
+  .hero-desc {
+    line-height: 1.65;
+  }
+
   .drone-monitor {
-    min-height: 390px;
+    min-height: 335px;
   }
 
   .drone-data {
-    transform: scale(.88);
+    min-width: 104px;
+    padding: 8px 9px;
+    transform: scale(.82);
+  }
+
+  .drone-data span {
+    font-size: .72rem;
+  }
+
+  .drone-data strong {
+    font-size: .9rem;
   }
 
   .data-main {
-    left: -8px;
+    top: 40%;
+    left: -12px;
   }
 
   .data-risk {
-    right: -8px;
+    top: 23%;
+    right: -12px;
+  }
+
+  .data-area {
+    right: -4px;
+    bottom: 7%;
+  }
+
+  .plant-20,
+  .plant-21,
+  .plant-22,
+  .plant-23,
+  .plant-24,
+  .plant-25,
+  .plant-26,
+  .plant-27,
+  .plant-28 {
+    display: none;
   }
 }

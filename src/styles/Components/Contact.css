@@ -162,3 +162,19 @@
     border-radius: 24px;
   }
 }
+
+@media (max-width: 480px) {
+  .info-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .form-box {
+    padding: 20px;
+    border-radius: 22px;
+  }
+
+  .form-group input {
+    height: 50px;
+  }
+}
