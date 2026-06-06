@@ -62,13 +62,20 @@
 }
 
 @media (max-width: 700px) {
+  .footer {
+    padding: 48px 0 28px;
+  }
+
   .footer-grid {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 20px;
   }
 
   .footer-bottom {
     flex-direction: column;
+    gap: 12px;
+    margin-top: 30px;
+    padding-top: 18px;
     text-align: center;
   }
 
@@ -80,10 +87,10 @@
 
 @media (max-width: 390px) {
   .footer {
-    padding-top: 52px;
+    padding-top: 44px;
   }
 
   .footer-bottom {
-    margin-top: 34px;
+    margin-top: 24px;
   }
 }

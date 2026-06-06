@@ -112,10 +112,22 @@
 }
 
 @media (max-width: 700px) {
+  .depo-grid {
+    gap: 14px;
+  }
+
   .depo-card {
     min-height: auto;
-    padding: 22px;
+    padding: 20px;
     border-radius: 22px;
+  }
+
+  .depo-top {
+    margin-bottom: 16px;
+  }
+
+  .depo-author {
+    margin-top: 18px;
   }
 }
 

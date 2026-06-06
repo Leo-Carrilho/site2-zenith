@@ -302,24 +302,48 @@ section,
   }
 
   .section-shell {
-    padding: 64px 0;
+    padding: 56px 0;
   }
 
   .section-header {
-    margin-bottom: 30px;
+    margin-bottom: 22px;
   }
 
   .section-title {
+    margin: 12px auto 10px;
     font-size: clamp(1.7rem, 8vw, 2.35rem);
   }
 
   .section-copy {
+    margin: 0;
     font-size: .98rem;
+    line-height: 1.6;
   }
 
   .btn {
     min-height: 48px;
+    padding: 13px 18px;
     white-space: normal;
+  }
+
+  .btn.small {
+    min-height: 48px;
+  }
+
+  .card-icon {
+    width: 46px;
+    height: 46px;
+    margin-bottom: 16px;
+    border-radius: 14px;
+  }
+
+  .motion-card {
+    backdrop-filter: none;
+    will-change: auto;
+  }
+
+  .site-ambient {
+    display: none;
   }
 }
 
@@ -333,7 +357,7 @@ section,
   }
 
   .section-shell {
-    padding: 56px 0;
+    padding: 48px 0;
   }
 }
 

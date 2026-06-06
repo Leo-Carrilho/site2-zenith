@@ -22,10 +22,11 @@ gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 export default function LandingPage() {
   useEffect(() => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isMobile = window.matchMedia("(max-width: 700px)").matches;
     let lenis;
     let rafId;
 
-    if (!reduceMotion) {
+    if (!reduceMotion && !isMobile) {
       lenis = new Lenis({
         duration: 1.35,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -65,11 +66,11 @@ export default function LandingPage() {
 
         if (headerItems.length) {
           gsap.from(headerItems, {
-            y: 54,
+            y: isMobile ? 22 : 54,
             opacity: 0,
-            clipPath: "inset(0 0 100% 0)",
-            duration: 1,
-            stagger: 0.12,
+            clipPath: isMobile ? "none" : "inset(0 0 100% 0)",
+            duration: isMobile ? 0.55 : 1,
+            stagger: isMobile ? 0.06 : 0.12,
             ease: "expo.out",
             scrollTrigger: {
               trigger: section,
@@ -81,14 +82,14 @@ export default function LandingPage() {
 
         if (cards.length) {
           gsap.from(cards, {
-            y: (index) => 54 + (index % 2) * 18,
-            x: (index) => (index % 2 === 0 ? -18 : 18),
-            rotateX: 8,
-            scale: 0.95,
+            y: isMobile ? 18 : (index) => 54 + (index % 2) * 18,
+            x: isMobile ? 0 : (index) => (index % 2 === 0 ? -18 : 18),
+            rotateX: isMobile ? 0 : 8,
+            scale: isMobile ? 0.98 : 0.95,
             opacity: 0,
             transformOrigin: "50% 100%",
-            duration: 1,
-            stagger: { amount: 0.42, from: "start" },
+            duration: isMobile ? 0.5 : 1,
+            stagger: { amount: isMobile ? 0.12 : 0.42, from: "start" },
             ease: "expo.out",
             scrollTrigger: {
               trigger: section,
@@ -97,16 +98,18 @@ export default function LandingPage() {
             },
           });
 
-          gsap.to(cards, {
-            y: (index) => (index % 2 === 0 ? -18 : -28),
-            ease: "none",
-            scrollTrigger: {
-              trigger: section,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: 1.1,
-            },
-          });
+          if (!isMobile) {
+            gsap.to(cards, {
+              y: (index) => (index % 2 === 0 ? -18 : -28),
+              ease: "none",
+              scrollTrigger: {
+                trigger: section,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 1.1,
+              },
+            });
+          }
         }
 
         if (icons.length) {
@@ -127,11 +130,11 @@ export default function LandingPage() {
 
         if (probabilityPanel) {
           gsap.fromTo(probabilityPanel, {
-            y: 260,
+            y: isMobile ? 28 : 260,
             opacity: 0,
-            scale: 0.9,
-            rotateX: 18,
-            clipPath: "inset(100% 0 0 0)",
+            scale: isMobile ? 0.98 : 0.9,
+            rotateX: isMobile ? 0 : 18,
+            clipPath: isMobile ? "none" : "inset(100% 0 0 0)",
           }, {
             y: 0,
             opacity: 1,
@@ -139,7 +142,7 @@ export default function LandingPage() {
             rotateX: 0,
             clipPath: "inset(0% 0 0 0)",
             transformOrigin: "50% 100%",
-            duration: 1.25,
+            duration: isMobile ? 0.55 : 1.25,
             ease: "expo.out",
             scrollTrigger: {
               trigger: section,
@@ -167,81 +170,87 @@ export default function LandingPage() {
         }
       });
 
-      gsap.utils.toArray(".timeline").forEach((timeline) => {
-        gsap.fromTo(timeline, { "--timeline-progress": "0%" }, {
-          "--timeline-progress": "100%",
+      if (!isMobile) {
+        gsap.utils.toArray(".timeline").forEach((timeline) => {
+          gsap.fromTo(timeline, { "--timeline-progress": "0%" }, {
+            "--timeline-progress": "100%",
+            ease: "none",
+            scrollTrigger: {
+              trigger: timeline,
+              start: "top 74%",
+              end: "bottom 42%",
+              scrub: 0.8,
+            },
+          });
+        });
+      }
+
+      if (!isMobile) {
+        gsap.utils.toArray(".analysis-target").forEach((target, index) => {
+          gsap.to(target, {
+            scale: 1.35,
+            opacity: 0.35,
+            duration: 1.8,
+            repeat: -1,
+            yoyo: true,
+            delay: index * 0.2,
+            ease: "sine.inOut",
+          });
+        });
+      }
+
+      if (!isMobile) {
+        gsap.to(".ai-card-glow", {
+          yPercent: -16,
+          xPercent: 12,
           ease: "none",
           scrollTrigger: {
-            trigger: timeline,
-            start: "top 74%",
-            end: "bottom 42%",
-            scrub: 0.8,
+            trigger: ".ai-section",
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1,
           },
         });
-      });
 
-      gsap.utils.toArray(".analysis-target").forEach((target, index) => {
-        gsap.to(target, {
-          scale: 1.35,
-          opacity: 0.35,
-          duration: 1.8,
+        gsap.to(".bento-visual span", {
+          y: -18,
+          rotate: 10,
+          stagger: 0.12,
+          duration: 2.2,
           repeat: -1,
           yoyo: true,
-          delay: index * 0.2,
           ease: "sine.inOut",
         });
-      });
 
-      gsap.to(".ai-card-glow", {
-        yPercent: -16,
-        xPercent: 12,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".ai-section",
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1,
-        },
-      });
+        gsap.to(".ambient-orb.one", {
+          y: 80,
+          x: 30,
+          duration: 12,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        });
 
-      gsap.to(".bento-visual span", {
-        y: -18,
-        rotate: 10,
-        stagger: 0.12,
-        duration: 2.2,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
+        gsap.to(".ambient-orb.two", {
+          y: -70,
+          x: -40,
+          duration: 14,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        });
 
-      gsap.to(".ambient-orb.one", {
-        y: 80,
-        x: 30,
-        duration: 12,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
-
-      gsap.to(".ambient-orb.two", {
-        y: -70,
-        x: -40,
-        duration: 14,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
-
-      gsap.to(".ambient-grid", {
-        yPercent: 8,
-        ease: "none",
-        scrollTrigger: {
-          trigger: document.body,
-          start: "top top",
-          end: "bottom bottom",
-          scrub: 1.4,
-        },
-      });
+        gsap.to(".ambient-grid", {
+          yPercent: 8,
+          ease: "none",
+          scrollTrigger: {
+            trigger: document.body,
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 1.4,
+          },
+        });
+      }
 
       ScrollTrigger.refresh();
     });

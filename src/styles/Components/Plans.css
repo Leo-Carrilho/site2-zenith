@@ -104,15 +104,32 @@
 }
 
 @media (max-width: 700px) {
+  .pricing-grid {
+    gap: 14px;
+  }
+
   .pricing-card {
     min-height: auto;
-    padding: 22px;
+    padding: 20px;
     border-radius: 22px;
   }
 
   .featured-crown {
     position: static;
     width: fit-content;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
+  }
+
+  .pricing-badge {
+    margin-bottom: 14px;
+  }
+
+  .pricing-price {
+    margin: 6px 0 18px;
+  }
+
+  .pricing-card ul {
+    gap: 10px;
+    margin-bottom: 20px;
   }
 }

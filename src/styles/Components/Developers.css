@@ -389,6 +389,14 @@
 }
 
 @media (max-width: 700px) {
+  .ai-header {
+    margin-bottom: 18px;
+  }
+
+  .ai-card {
+    gap: 10px;
+  }
+
   .ai-panel,
   .ai-insights {
     border-radius: 20px;
@@ -396,7 +404,7 @@
 
   .ai-panel-top {
     align-items: flex-start;
-    padding: 16px;
+    padding: 12px;
     flex-wrap: wrap;
   }
 
@@ -405,13 +413,13 @@
   }
 
   .analysis-preview {
-    min-height: clamp(170px, 52vw, 220px);
-    margin: 18px 16px;
+    min-height: clamp(150px, 48vw, 200px);
+    margin: 14px 12px;
     border-radius: 18px;
   }
 
   .analysis-preview img {
-    min-height: clamp(170px, 52vw, 220px);
+    min-height: clamp(150px, 48vw, 200px);
   }
 
   .analysis-status-row,
@@ -422,7 +430,11 @@
 
   .analysis-status-row,
   .analysis-actions {
-    padding-inline: 16px;
+    padding: 10px 12px;
+  }
+
+  .analysis-btn {
+    min-height: 48px;
   }
 }
 

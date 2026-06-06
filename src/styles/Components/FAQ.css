@@ -122,13 +122,22 @@
 }
 
 @media (max-width: 700px) {
+  .faq-shell {
+    gap: 14px;
+  }
+
   .faq-aside {
-    padding: 22px;
+    padding: 20px;
     border-radius: 22px;
   }
 
   .faq-q {
-    padding: 16px;
+    min-height: 48px;
+    padding: 14px 16px;
+  }
+
+  .faq-item.open .faq-a {
+    padding-bottom: 16px;
   }
 }
 

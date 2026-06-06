@@ -72,7 +72,7 @@ export default function Header({ onInstallClick }) {
           onClick={(event) => scrollToSection(event, "#hero")}
           aria-label="Zenith Agro - início"
         >
-          < img src="assets/images/Logo-redonda.png" alt="Logo da Zenith Agro" width="52" height="52" aria-hidden="true" />
+          <img src="assets/images/Logo-redonda.png" alt="Logo da Zenith Agro" width="52" height="52" aria-hidden="true" />
         </a>
 
         <nav className="nav-links" aria-label="Navegação principal">

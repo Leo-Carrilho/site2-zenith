@@ -51,11 +51,21 @@
 @media (max-width: 700px) {
   .feature-grid {
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 14px;
   }
 
   .feature-card {
-    padding: 22px;
+    padding: 20px;
     border-radius: 22px;
+  }
+
+  .feature-card h3,
+  .feature-card p {
+    margin-bottom: 8px;
+  }
+
+  .inline-link {
+    min-height: 48px;
+    margin-top: 12px;
   }
 }

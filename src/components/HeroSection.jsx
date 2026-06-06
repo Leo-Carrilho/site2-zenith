@@ -1,9 +1,11 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { FaArrowRight, FaBrain, FaDownload, FaSeedling, FaWhatsapp } from "react-icons/fa";
+import { FaArrowRight, FaDownload, FaSeedling, FaWhatsapp } from "react-icons/fa";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const MOBILE_QUERY = "(max-width: 700px)";
 
 const METRICS = [
   { label: "NDVI médio", value: "82%", tone: "strong" },
@@ -15,6 +17,30 @@ export default function HeroSection() {
   const heroRef = useRef(null);
   const videoRef = useRef(null);
   const magneticRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia(MOBILE_QUERY).matches;
+  });
+
+  useEffect(() => {
+    const query = window.matchMedia(MOBILE_QUERY);
+    const updateViewport = () => setIsMobile(query.matches);
+
+    updateViewport();
+    if (query.addEventListener) {
+      query.addEventListener("change", updateViewport);
+    } else {
+      query.addListener(updateViewport);
+    }
+
+    return () => {
+      if (query.removeEventListener) {
+        query.removeEventListener("change", updateViewport);
+      } else {
+        query.removeListener(updateViewport);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -26,7 +52,7 @@ export default function HeroSection() {
     video?.addEventListener("loadedmetadata", setSlowMotion);
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduceMotion) {
+    if (reduceMotion || isMobile) {
       return () => video?.removeEventListener("loadedmetadata", setSlowMotion);
     }
 
@@ -95,7 +121,7 @@ export default function HeroSection() {
       button?.removeEventListener("mousemove", onMove);
       button?.removeEventListener("mouseleave", onLeave);
     };
-  }, []);
+  }, [isMobile]);
 
   const handleInstall = () => {
     const isAndroid = /Android/i.test(navigator.userAgent);
@@ -108,11 +134,15 @@ export default function HeroSection() {
 
   return (
     <section className="hero" id="hero" ref={heroRef}>
-      <div className="hero-bg-video" aria-hidden="true">
-        <video autoPlay muted loop playsInline ref={videoRef}>
-          <source src="/assets/videos/videoDrone.mp4" type="video/mp4" />
-        </video>
-      </div>
+      {isMobile ? (
+        <div className="hero-bg-image" aria-hidden="true" />
+      ) : (
+        <div className="hero-bg-video" aria-hidden="true">
+          <video autoPlay muted loop playsInline ref={videoRef} preload="metadata">
+            <source src="/assets/videos/videoDrone.mp4" type="video/mp4" />
+          </video>
+        </div>
+      )}
       <div className="hero-vignette" aria-hidden="true" />
 
       <div className="container hero-inner">

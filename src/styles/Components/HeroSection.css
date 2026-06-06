@@ -7,15 +7,27 @@
 }
 
 .hero-bg-video,
+.hero-bg-image,
 .hero-bg-video video,
 .hero-vignette {
   position: absolute;
   inset: 0;
 }
 
-.hero-bg-video {
+.hero-bg-video,
+.hero-bg-image {
   z-index: 0;
   pointer-events: none;
+}
+
+.hero-bg-image {
+  background:
+    linear-gradient(180deg, rgba(5,12,8,.16), rgba(5,12,8,.86)),
+    image-set(url("/assets/images/Fundo_landing.jpg") 1x);
+  background-position: center;
+  background-size: cover;
+  filter: brightness(.62) saturate(.9) contrast(1.06);
+  transform: scale(1.02);
 }
 
 .hero-bg-video video {
@@ -723,14 +735,34 @@
 }
 
 @media (max-width: 700px) {
+  .hero {
+    min-height: auto;
+  }
+
+  .hero-vignette {
+    background:
+      radial-gradient(circle at 50% 16%, rgba(102,187,106,.2), transparent 46%),
+      linear-gradient(180deg, rgba(5,12,8,.7), rgba(5,12,8,.82) 46%, rgba(10,26,15,.95));
+  }
+
   .hero-inner {
     min-height: auto;
-    padding: 104px 0 54px;
-    gap: 28px;
+    padding: 92px 0 48px;
+    gap: 24px;
+  }
+
+  .hero-title {
+    margin: 18px 0 12px;
+  }
+
+  .hero-desc {
+    line-height: 1.6;
   }
 
   .hero-actions {
     flex-direction: column;
+    gap: 10px;
+    margin: 24px 0;
   }
 
   .hero-actions .btn {
@@ -739,6 +771,7 @@
 
   .hero-stats {
     grid-template-columns: 1fr;
+    gap: 10px;
   }
 
   .hero-stat {
@@ -752,7 +785,7 @@
   }
 
   .drone-monitor {
-    min-height: clamp(340px, 92vw, 430px);
+    min-height: clamp(300px, 82vw, 390px);
     border-radius: 24px;
   }
 
@@ -806,7 +839,7 @@
   }
 
   .drone-monitor {
-    min-height: 335px;
+    min-height: 300px;
   }
 
   .drone-data {
@@ -848,5 +881,26 @@
   .plant-27,
   .plant-28 {
     display: none;
+  }
+}
+
+@media (max-width: 700px), (prefers-reduced-motion: reduce) {
+  .hero-orbit,
+  .drone-unit,
+  .drone-sensor,
+  .drone-shadow,
+  .scan-cone,
+  .scan-band,
+  .field-hotspot,
+  .soy-plant,
+  .signal-dot,
+  .scan-target,
+  .flight-arc::after {
+    animation: none !important;
+  }
+
+  .drone-monitor,
+  .probability-panel {
+    will-change: auto;
   }
 }

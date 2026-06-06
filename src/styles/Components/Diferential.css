@@ -178,10 +178,11 @@
 @media (max-width: 700px) {
   .bento-grid {
     grid-template-columns: 1fr;
+    gap: 14px;
   }
 
   .bento-card {
-    padding: 22px;
+    padding: 20px;
     border-radius: 22px;
   }
 
@@ -193,7 +194,17 @@
 
   .probability-panel {
     max-width: none;
-    padding: 16px;
+    margin-top: 18px;
+    padding: 14px;
+  }
+
+  .probability-list {
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .bento-visual {
+    display: none;
   }
 }
 
