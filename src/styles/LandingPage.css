@@ -345,6 +345,22 @@ section,
   .site-ambient {
     display: none;
   }
+
+  .section-eyebrow,
+  .section-title,
+  .section-copy,
+  .motion-card,
+  .step-card,
+  .pricing-card,
+  .depo-card,
+  .faq-item,
+  .info-card,
+  .probability-panel,
+  .probability-row {
+    clip-path: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 @media (max-width: 390px) {

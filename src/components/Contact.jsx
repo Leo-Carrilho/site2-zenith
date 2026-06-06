@@ -44,8 +44,6 @@ export default function Contact() {
 
         <div className="contato-grid">
           <div className="contato-info">
-            <h2 className="section-title small">Vamos conversar sobre sua propriedade</h2>
-            <p className="section-copy">Conte seu cenário e nossa equipe indica a melhor forma de começar.</p>
             <div className="info-cards">
               {INFO_CARDS.map((card) => (
                 <article className="info-card motion-card" key={card.title}>

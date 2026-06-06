@@ -885,6 +885,17 @@
 }
 
 @media (max-width: 700px), (prefers-reduced-motion: reduce) {
+  .hero-kicker,
+  .hero-title,
+  .hero-desc,
+  .hero-actions,
+  .hero-stat,
+  .drone-monitor,
+  .floating-chip {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
   .hero-orbit,
   .drone-unit,
   .drone-sensor,

@@ -43,7 +43,7 @@ export default function LandingPage() {
       lenis.on("scroll", ScrollTrigger.update);
     }
 
-    if (reduceMotion) {
+    if (reduceMotion || isMobile) {
       return () => {
         if (rafId) cancelAnimationFrame(rafId);
         lenis?.destroy();
