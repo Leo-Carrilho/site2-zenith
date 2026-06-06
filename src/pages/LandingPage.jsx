@@ -44,6 +44,37 @@ export default function LandingPage() {
     }
 
     if (reduceMotion || isMobile) {
+      if (isMobile && !reduceMotion) {
+        const revealItems = document.querySelectorAll(
+          ".section-header, .feature-card, .step-card, .ai-card, .team-card, .bento-card, .pricing-card, .depo-card, .faq-item, .info-card, .form-box, .final-cta"
+        );
+
+        revealItems.forEach((item) => item.classList.add("mobile-reveal"));
+
+        const revealNow = (item) => item.classList.add("is-visible");
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              revealNow(entry.target);
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          rootMargin: "0px 0px -8% 0px",
+          threshold: 0.08,
+        });
+
+        revealItems.forEach((item) => observer.observe(item));
+        window.setTimeout(() => revealItems.forEach(revealNow), 900);
+
+        return () => {
+          observer.disconnect();
+          revealItems.forEach((item) => item.classList.remove("mobile-reveal", "is-visible"));
+          if (rafId) cancelAnimationFrame(rafId);
+          lenis?.destroy();
+        };
+      }
+
       return () => {
         if (rafId) cancelAnimationFrame(rafId);
         lenis?.destroy();

@@ -8,6 +8,7 @@ const LINKS = [
   { href: "#servicos", label: "Funcionalidades" },
   { href: "#beneficios", label: "Benefícios" },
   { href: "#ia-zenith", label: "IA Zenith" },
+  { href: "#desenvolvedores", label: "Equipe" },
   { href: "#contato", label: "Contato" },
 ];
 

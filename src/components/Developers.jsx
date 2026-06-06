@@ -5,8 +5,11 @@ import {
   FaCheckCircle,
   FaCrosshairs,
   FaImage,
+  FaGithub,
+  FaLinkedin,
   FaMagic,
   FaMicrochip,
+  FaUserGraduate,
 } from "react-icons/fa";
 
 const INSIGHTS = [
@@ -19,6 +22,37 @@ const ANALYSIS_STEPS = [
   { icon: <FaCrosshairs />, label: "Pre-processamento" },
   { icon: <FaBrain />, label: "Inferencia" },
   { icon: <FaChartBar />, label: "Resultado final" },
+];
+
+const DEVELOPERS = [
+  {
+    name: "Leonardo",
+    age: "17 anos",
+    focus: "Front-end, experiencia mobile e organizacao visual das telas.",
+    github: "https://github.com/",
+    linkedin: "https://www.linkedin.com/",
+  },
+  {
+    name: "Octávio",
+    age: "17 anos",
+    focus: "IA, analise das imagens da lavoura e validacao dos resultados.",
+    github: "https://github.com/",
+    linkedin: "https://www.linkedin.com/",
+  },
+  {
+    name: "Pietro",
+    age: "17 anos",
+    focus: "Aplicativo Mobile, testes, ajustes responsivos e experiencia do usuario.",
+    github: "https://github.com/",
+    linkedin: "https://www.linkedin.com/",
+  },
+  {
+    name: "Samuel",
+    age: "17 anos",
+    focus: "App mobile, integracao com backend, testes e validacao de funcionalidades.",
+    github: "https://github.com/",
+    linkedin: "https://www.linkedin.com/",
+  },
 ];
 
 export default function Developers() {
@@ -112,6 +146,40 @@ export default function Developers() {
                 </li>
               ))}
             </ul>
+          </div>
+        </div>
+
+        <div className="team-section" id="desenvolvedores">
+          <div className="section-header team-header">
+            <span className="section-eyebrow">Desenvolvedores</span>
+            <h2 className="section-title small">A equipe por trás do Zenith Agro</h2>
+            <p className="section-copy">
+              Quatro frentes trabalhando juntas para transformar dados do campo em uma experiencia simples,
+              rapida e confiavel.
+            </p>
+          </div>
+
+          <div className="team-grid">
+            {DEVELOPERS.map((developer) => (
+              <article className="team-card motion-card" key={developer.name}>
+                <div className="team-avatar" aria-hidden="true">
+                  <FaUserGraduate />
+                </div>
+                <div className="team-copy">
+                  <span>{developer.age}</span>
+                  <h3>{developer.name}</h3>
+                  <p>{developer.focus}</p>
+                </div>
+                <div className="team-links" aria-label={`Links de ${developer.name}`}>
+                  <a href={developer.github} target="_blank" rel="noreferrer" aria-label={`GitHub de ${developer.name}`}>
+                    <FaGithub />
+                  </a>
+                  <a href={developer.linkedin} target="_blank" rel="noreferrer" aria-label={`LinkedIn de ${developer.name}`}>
+                    <FaLinkedin />
+                  </a>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </div>

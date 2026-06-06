@@ -361,6 +361,17 @@ section,
     opacity: 1 !important;
     transform: none !important;
   }
+
+  .mobile-reveal {
+    opacity: 0 !important;
+    transform: translate3d(0, 18px, 0) scale(.98) !important;
+    transition: opacity .48s ease, transform .48s ease !important;
+  }
+
+  .mobile-reveal.is-visible {
+    opacity: 1 !important;
+    transform: translate3d(0, 0, 0) scale(1) !important;
+  }
 }
 
 @media (max-width: 390px) {
@@ -392,5 +403,11 @@ section,
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: .01ms !important;
+  }
+
+  .mobile-reveal,
+  .mobile-reveal.is-visible {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
