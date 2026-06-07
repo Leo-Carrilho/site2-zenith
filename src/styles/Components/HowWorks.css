@@ -3,7 +3,7 @@
   display: grid;
   --timeline-progress: 0%;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 10px;
+  gap: 12px;
   align-items: stretch;
 }
 
@@ -24,8 +24,8 @@
   position: relative;
   z-index: 1;
   min-width: 0;
-  min-height: 190px;
-  padding: 18px;
+  min-height: 158px;
+  padding: 16px;
   overflow: hidden;
   text-align: left;
   transition: var(--transition);
@@ -40,17 +40,21 @@
 }
 
 .step-card h3 {
-  margin: 14px 0 8px;
+  margin: 10px 0 6px;
   color: var(--text-primary);
   font-size: 1rem;
   line-height: 1.15;
 }
 
 .step-card p {
+  display: -webkit-box;
   margin: 0;
+  overflow: hidden;
   color: var(--text-secondary);
   font-size: .86rem;
-  line-height: 1.55;
+  line-height: 1.48;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
 }
 
 .step-num {
@@ -71,7 +75,7 @@
   display: grid;
   width: 34px;
   height: 34px;
-  margin-top: 16px;
+  margin-top: 12px;
   place-items: center;
   border-radius: 12px;
   background: rgba(102,187,106,.1);

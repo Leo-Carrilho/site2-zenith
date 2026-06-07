@@ -9,7 +9,6 @@ import {
   FaLinkedin,
   FaMagic,
   FaMicrochip,
-  FaUserGraduate,
 } from "react-icons/fa";
 
 const INSIGHTS = [
@@ -28,6 +27,8 @@ const DEVELOPERS = [
   {
     name: "Leonardo",
     age: "17 anos",
+    role: "Front-end",
+    tags: ["UI", "Firebase", "React"],
     focus: "Front-end, experiencia mobile e organizacao visual das telas.",
     github: "https://github.com/",
     linkedin: "https://www.linkedin.com/",
@@ -35,6 +36,8 @@ const DEVELOPERS = [
   {
     name: "Octávio",
     age: "17 anos",
+    role: "IA",
+    tags: ["Visao", "Dados", "ML"],
     focus: "IA, analise das imagens da lavoura e validacao dos resultados.",
     github: "https://github.com/",
     linkedin: "https://www.linkedin.com/",
@@ -42,6 +45,8 @@ const DEVELOPERS = [
   {
     name: "Pietro",
     age: "17 anos",
+    role: "Desktop",
+    tags: ["UX", "Frontend", "React App"],
     focus: "Aplicativo Mobile, testes, ajustes responsivos e experiencia do usuario.",
     github: "https://github.com/",
     linkedin: "https://www.linkedin.com/",
@@ -49,6 +54,8 @@ const DEVELOPERS = [
   {
     name: "Samuel",
     age: "17 anos",
+    role: "Mobile",
+    tags: ["Frontend", "App", "QA"],
     focus: "App mobile, integracao com backend, testes e validacao de funcionalidades.",
     github: "https://github.com/",
     linkedin: "https://www.linkedin.com/",
@@ -162,12 +169,17 @@ export default function Developers() {
           <div className="team-grid">
             {DEVELOPERS.map((developer) => (
               <article className="team-card motion-card" key={developer.name}>
+                <span className="team-rate">{developer.role}</span>
                 <div className="team-avatar" aria-hidden="true">
-                  <FaUserGraduate />
+                  <span>{developer.name.charAt(0)}</span>
                 </div>
                 <div className="team-copy">
                   <span>{developer.age}</span>
                   <h3>{developer.name}</h3>
+                  <strong>{developer.role} Zenith</strong>
+                  <div className="team-tags" aria-label={`Especialidades de ${developer.name}`}>
+                    {developer.tags.map((tag) => <span key={tag}>{tag}</span>)}
+                  </div>
                   <p>{developer.focus}</p>
                 </div>
                 <div className="team-links" aria-label={`Links de ${developer.name}`}>

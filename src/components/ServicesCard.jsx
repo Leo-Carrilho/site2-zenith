@@ -33,6 +33,8 @@ const SERVICES = [
   },
 ];
 
+const FEATURE_LABELS = ["Campo", "IA", "Mapa", "Gestao", "Alertas", "Safra"];
+
 export default function ServicesCard() {
   return (
     <section className="section-shell services" id="servicos">
@@ -46,9 +48,13 @@ export default function ServicesCard() {
         </div>
 
         <div className="feature-grid">
-          {SERVICES.map((service) => (
-            <article className="feature-card motion-card" key={service.title}>
-              <div className="card-icon">{service.icon}</div>
+          {SERVICES.map((service, index) => (
+            <article className={`feature-card motion-card ${index === 0 ? "featured" : ""} ${index === 4 ? "wide" : ""}`} key={service.title}>
+              <div className="feature-top">
+                <div className="card-icon">{service.icon}</div>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+              </div>
+              <span className="feature-label">{FEATURE_LABELS[index]}</span>
               <h3>{service.title}</h3>
               <p>{service.desc}</p>
               <a href="#contato" className="inline-link">
@@ -56,6 +62,14 @@ export default function ServicesCard() {
               </a>
             </article>
           ))}
+        </div>
+
+        <div className="section-cta motion-card">
+          <div>
+            <strong>Veja o Zenith aplicado na sua propriedade</strong>
+            <span>Receba uma leitura inicial de como drones e IA podem reduzir perdas na sua safra.</span>
+          </div>
+          <a href="https://wa.me/5519999999999" className="btn btn-primary small">Agendar demonstração</a>
         </div>
       </div>
     </section>

@@ -1,13 +1,13 @@
 .bento-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 18px;
+  gap: 14px;
 }
 
 .bento-card {
   position: relative;
   min-width: 0;
-  padding: 28px;
+  padding: 22px;
   overflow: hidden;
   transition: var(--transition);
 }
@@ -15,7 +15,7 @@
 .bento-card.large {
   grid-column: span 2;
   grid-row: span 2;
-  min-height: 420px;
+  min-height: 330px;
 }
 
 .bento-card.wide {
@@ -23,21 +23,29 @@
 }
 
 .bento-card h3 {
-  margin: 0 0 10px;
+  margin: 0 0 8px;
   color: var(--text-primary);
-  font-size: 1.2rem;
+  font-size: 1.08rem;
+  line-height: 1.18;
 }
 
 .bento-card p {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
   color: var(--text-secondary);
+  font-size: .92rem;
+  line-height: 1.5;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
 }
 
 .probability-panel {
   position: relative;
   z-index: 2;
   max-width: 430px;
-  margin-top: 26px;
-  padding: 18px;
+  margin-top: 18px;
+  padding: 14px;
   border: 1px solid rgba(255,255,255,.08);
   border-radius: 22px;
   background: rgba(5,12,8,.42);
@@ -76,14 +84,14 @@
 
 .probability-list {
   display: grid;
-  gap: 14px;
-  margin-top: 16px;
+  gap: 10px;
+  margin-top: 12px;
 }
 
 .probability-row {
   display: grid;
   grid-template-columns: minmax(140px, 1fr) minmax(110px, 1.25fr) 48px;
-  gap: 12px;
+  gap: 10px;
   align-items: center;
 }
 
@@ -131,8 +139,8 @@
 
 .bento-visual {
   position: absolute;
-  right: 24px;
-  bottom: 24px;
+  right: 18px;
+  bottom: 18px;
   display: flex;
   align-items: end;
   gap: 8px;
@@ -147,8 +155,8 @@
 }
 
 .bento-visual span:nth-child(1) { height: 46px; }
-.bento-visual span:nth-child(2) { height: 82px; }
-.bento-visual span:nth-child(3) { height: 60px; }
+.bento-visual span:nth-child(2) { height: 64px; }
+.bento-visual span:nth-child(3) { height: 52px; }
 
 @keyframes probability-spin {
   to { transform: rotate(360deg); }
@@ -182,8 +190,8 @@
   }
 
   .bento-card {
-    padding: 20px;
-    border-radius: 22px;
+    padding: 16px;
+    border-radius: 18px;
   }
 
   .bento-card.large,

@@ -1,8 +1,8 @@
 .final-cta {
   display: grid;
   justify-items: center;
-  margin-bottom: 54px;
-  padding: clamp(34px, 7vw, 76px);
+  margin-bottom: 34px;
+  padding: clamp(28px, 5vw, 48px);
   text-align: center;
   background:
     radial-gradient(circle at 50% 100%, rgba(76,175,80,.26), transparent 45%),
@@ -11,14 +11,14 @@
 
 .final-cta h2 {
   max-width: 760px;
-  margin: 16px auto 12px;
-  font-size: clamp(2rem, 6vw, 4rem);
+  margin: 12px auto 10px;
+  font-size: clamp(1.9rem, 4.8vw, 3.15rem);
   line-height: 1.05;
 }
 
 .final-cta p {
   max-width: 680px;
-  margin: 0 auto 28px;
+  margin: 0 auto 22px;
   color: var(--text-secondary);
   font-size: clamp(1rem, 3vw, 1.2rem);
 }
@@ -26,14 +26,14 @@
 .contato-grid {
   display: grid;
   grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
-  gap: 28px;
+  gap: 20px;
   align-items: start;
 }
 
 .info-cards {
   display: grid;
   gap: 12px;
-  margin-top: 28px;
+  margin-top: 0;
 }
 
 .info-card {
@@ -42,24 +42,25 @@
   min-width: 0;
   align-items: center;
   gap: 16px;
-  padding: 18px;
+  padding: 16px;
   overflow: hidden;
   transition: var(--transition);
 }
 
 .info-card .card-icon {
-  width: 48px;
-  height: 48px;
+  width: 42px;
+  height: 42px;
   margin: 0;
 }
 
 .info-card h3 {
-  margin: 0 0 10px;
+  margin: 0 0 6px;
   color: var(--text-primary);
   font-size: 1.2rem;
 }
 
 .info-card p {
+  margin: 0;
   color: var(--text-secondary);
 }
 
@@ -69,11 +70,11 @@
 }
 
 .form-box {
-  padding: clamp(22px, 4vw, 38px);
+  padding: clamp(20px, 3vw, 30px);
 }
 
 .form-box h3 {
-  margin: 0 0 24px;
+  margin: 0 0 18px;
   font-size: 1.45rem;
 }
 
@@ -106,7 +107,7 @@
 }
 
 .form-group textarea {
-  min-height: 140px;
+  min-height: 118px;
   padding: 16px 18px;
   resize: vertical;
 }
@@ -153,9 +154,9 @@
 
 @media (max-width: 700px) {
   .final-cta {
-    margin-bottom: 32px;
-    padding: 28px 18px;
-    border-radius: 24px;
+    margin-bottom: 24px;
+    padding: 24px 18px;
+    border-radius: 18px;
   }
 
   .final-cta h2 {
@@ -178,8 +179,8 @@
   }
 
   .info-card {
-    padding: 18px;
-    border-radius: 22px;
+    padding: 16px;
+    border-radius: 18px;
   }
 
   .info-card h3 {
@@ -207,7 +208,7 @@
 
   .form-box {
     padding: 18px;
-    border-radius: 22px;
+    border-radius: 18px;
   }
 
   .form-group input {

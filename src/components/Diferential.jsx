@@ -82,6 +82,14 @@ export default function Diferential() {
             </article>
           ))}
         </div>
+
+        <div className="section-cta motion-card">
+          <div>
+            <strong>Transforme diagnóstico em decisão de manejo</strong>
+            <span>Converse com a equipe e priorize talhões, insumos e riscos com dados visuais.</span>
+          </div>
+          <a href="https://wa.me/5519999999999" className="btn btn-primary small">Falar com especialista</a>
+        </div>
       </div>
     </section>
   );
