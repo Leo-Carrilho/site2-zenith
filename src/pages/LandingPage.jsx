@@ -26,6 +26,57 @@ export default function LandingPage() {
     let lenis;
     let rafId;
 
+    const setupScrollReveal = () => {
+      const revealGroups = [
+        document.querySelectorAll(".services .motion-card"),
+        document.querySelectorAll(".how-works .motion-card"),
+        document.querySelectorAll(".team-section .motion-card"),
+        document.querySelectorAll(".benefits .motion-card"),
+        document.querySelectorAll(".pricing .motion-card"),
+        document.querySelectorAll(".depoimentos .motion-card"),
+      ];
+      const iaRevealItems = document.querySelectorAll(".ai-section > .ai-shell > .ai-card");
+      const revealItems = [];
+
+      revealGroups.forEach((group) => {
+        group.forEach((item, index) => {
+          item.classList.add("scroll-reveal");
+          item.style.setProperty("--reveal-delay", `${Math.min(index * 70, 280)}ms`);
+          revealItems.push(item);
+        });
+      });
+
+      iaRevealItems.forEach((item) => {
+        item.classList.add("scroll-reveal-left");
+        revealItems.push(item);
+      });
+
+      const revealNow = (item) => item.classList.add("is-visible");
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            revealNow(entry.target);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        rootMargin: "0px 0px -10% 0px",
+        threshold: 0.18,
+      });
+
+      revealItems.forEach((item) => observer.observe(item));
+
+      return () => {
+        observer.disconnect();
+        revealItems.forEach((item) => {
+          item.classList.remove("scroll-reveal", "scroll-reveal-left", "is-visible");
+          item.style.removeProperty("--reveal-delay");
+        });
+      };
+    };
+
+    const cleanupScrollReveal = setupScrollReveal();
+
     if (!reduceMotion && !isMobile) {
       lenis = new Lenis({
         duration: 1.35,
@@ -44,38 +95,8 @@ export default function LandingPage() {
     }
 
     if (reduceMotion || isMobile) {
-      if (isMobile && !reduceMotion) {
-        const revealItems = document.querySelectorAll(
-          ".section-header, .feature-card, .step-card, .ai-card, .team-card, .bento-card, .pricing-card, .depo-card, .faq-item, .info-card, .form-box, .final-cta"
-        );
-
-        revealItems.forEach((item) => item.classList.add("mobile-reveal"));
-
-        const revealNow = (item) => item.classList.add("is-visible");
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              revealNow(entry.target);
-              observer.unobserve(entry.target);
-            }
-          });
-        }, {
-          rootMargin: "0px 0px -8% 0px",
-          threshold: 0.08,
-        });
-
-        revealItems.forEach((item) => observer.observe(item));
-        window.setTimeout(() => revealItems.forEach(revealNow), 900);
-
-        return () => {
-          observer.disconnect();
-          revealItems.forEach((item) => item.classList.remove("mobile-reveal", "is-visible"));
-          if (rafId) cancelAnimationFrame(rafId);
-          lenis?.destroy();
-        };
-      }
-
       return () => {
+        cleanupScrollReveal();
         if (rafId) cancelAnimationFrame(rafId);
         lenis?.destroy();
       };
@@ -91,7 +112,6 @@ export default function LandingPage() {
 
       gsap.utils.toArray(".section-shell").forEach((section) => {
         const headerItems = section.querySelectorAll(".section-eyebrow, .section-title, .section-copy");
-        const cards = section.querySelectorAll(".motion-card, .step-card, .pricing-card, .depo-card, .faq-item, .info-card");
         const icons = section.querySelectorAll(".card-icon, .step-icon, .pricing-badge, .featured-crown");
         const probabilityPanel = section.querySelector(".probability-panel");
 
@@ -109,38 +129,6 @@ export default function LandingPage() {
               once: true,
             },
           });
-        }
-
-        if (cards.length) {
-          gsap.from(cards, {
-            y: isMobile ? 18 : (index) => 54 + (index % 2) * 18,
-            x: isMobile ? 0 : (index) => (index % 2 === 0 ? -18 : 18),
-            rotateX: isMobile ? 0 : 8,
-            scale: isMobile ? 0.98 : 0.95,
-            opacity: 0,
-            transformOrigin: "50% 100%",
-            duration: isMobile ? 0.5 : 1,
-            stagger: { amount: isMobile ? 0.12 : 0.42, from: "start" },
-            ease: "expo.out",
-            scrollTrigger: {
-              trigger: section,
-              start: "top 70%",
-              once: true,
-            },
-          });
-
-          if (!isMobile) {
-            gsap.to(cards, {
-              y: (index) => (index % 2 === 0 ? -18 : -28),
-              ease: "none",
-              scrollTrigger: {
-                trigger: section,
-                start: "top bottom",
-                end: "bottom top",
-                scrub: 1.1,
-              },
-            });
-          }
         }
 
         if (icons.length) {
@@ -288,6 +276,7 @@ export default function LandingPage() {
 
     return () => {
       ctx.revert();
+      cleanupScrollReveal();
       if (rafId) cancelAnimationFrame(rafId);
       lenis?.destroy();
     };
