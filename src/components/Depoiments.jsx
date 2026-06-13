@@ -21,7 +21,7 @@ const TESTIMONIALS = [
 
 export default function Depoiments() {
   return (
-    <section className="section-shell depoimentos">
+    <section className="section-shell depoimentos" id="depoimentos">
       <div className="container">
         <div className="section-header">
           <span className="section-eyebrow">Depoimentos</span>

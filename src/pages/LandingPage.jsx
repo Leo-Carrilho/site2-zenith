@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import gsap from "gsap";
+import ScrollMagic from "scrollmagic";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import Lenis from "lenis";
@@ -101,6 +102,114 @@ export default function LandingPage() {
         lenis?.destroy();
       };
     }
+
+    const controller = new ScrollMagic.Controller();
+    const scenes = [];
+    const pinnedTimelines = [];
+    const createdElements = [];
+    const updateScrollMagic = () => controller.update(true);
+
+    lenis?.on("scroll", updateScrollMagic);
+
+    const createPinnedCardsAnimation = (sectionSelector, cardSelector) => {
+      const section = document.querySelector(sectionSelector);
+      const cards = section?.querySelectorAll(cardSelector);
+
+      if (!section || !cards?.length) return;
+
+      gsap.set(cards, {
+        opacity: 0,
+        y: 80,
+        scale: 0.96,
+        transformOrigin: "50% 100%",
+        willChange: "transform, opacity",
+      });
+
+      const timeline = gsap.timeline();
+      timeline.pause();
+
+      cards.forEach((card) => {
+        timeline.to(card, {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.8,
+          ease: "power3.out",
+        });
+      });
+
+      const scene = new ScrollMagic.Scene({
+        triggerElement: section,
+        triggerHook: 0.06,
+        duration: Math.max(cards.length * 430, 900),
+      })
+        .setPin(section, { pushFollowers: true })
+        .on("progress", (event) => timeline.progress(event.progress))
+        .addTo(controller);
+
+      scenes.push(scene);
+      pinnedTimelines.push(timeline);
+    };
+
+    const createDroneScrollAnimation = () => {
+      const drone = document.querySelector(".drone-unit");
+      const droneImage = drone?.querySelector(".drone-image");
+      const hero = document.querySelector(".hero");
+      const services = document.querySelector("#servicos");
+
+      if (!drone || !droneImage || !hero || !services) return;
+
+      const droneRect = drone.getBoundingClientRect();
+      const servicesRect = services.getBoundingClientRect();
+      const initialX = droneRect.left;
+      const initialY = droneRect.top;
+      const targetX = Math.min(
+        servicesRect.right - droneRect.width * 0.66,
+        window.innerWidth - droneRect.width * 0.66 - Math.min(window.innerWidth * 0.035, 48)
+      );
+      const targetY = Math.min(window.innerHeight * 0.3, 220);
+      const targetScale = window.innerWidth < 1120 ? 0.68 : 0.58;
+      const scrollDrone = document.createElement("img");
+
+      scrollDrone.src = droneImage.getAttribute("src");
+      scrollDrone.alt = "";
+      scrollDrone.className = "scroll-drone";
+      scrollDrone.setAttribute("aria-hidden", "true");
+      document.body.appendChild(scrollDrone);
+      createdElements.push(scrollDrone);
+
+      gsap.set(drone, { autoAlpha: 0 });
+      gsap.set(scrollDrone, {
+        top: initialY,
+        left: initialX,
+        width: droneRect.width,
+        height: droneRect.height,
+        transformOrigin: "50% 20%",
+        willChange: "transform, opacity",
+      });
+
+      const timeline = gsap.timeline();
+      timeline.pause();
+
+      timeline.to(scrollDrone, {
+        x: targetX - initialX,
+        y: targetY - initialY,
+        scale: targetScale,
+        rotation: 7,
+        ease: "none",
+      });
+
+      const scene = new ScrollMagic.Scene({
+        triggerElement: hero,
+        triggerHook: 0,
+        duration: Math.max(services.offsetTop - hero.offsetTop + window.innerHeight * 0.22, window.innerHeight * 1.25),
+      })
+        .on("progress", (event) => timeline.progress(event.progress))
+        .addTo(controller);
+
+      scenes.push(scene);
+      pinnedTimelines.push(timeline);
+    };
 
     const ctx = gsap.context(() => {
       gsap.from(".navbar", {
@@ -271,10 +380,22 @@ export default function LandingPage() {
         });
       }
 
+      createDroneScrollAnimation();
+      createPinnedCardsAnimation("#servicos", ".feature-card");
+      createPinnedCardsAnimation("#sobre", ".step-card");
+      createPinnedCardsAnimation("#desenvolvedores", ".team-card");
+      createPinnedCardsAnimation("#planos", ".pricing-card");
+      createPinnedCardsAnimation("#depoimentos", ".depo-card");
+
       ScrollTrigger.refresh();
     });
 
     return () => {
+      scenes.forEach((scene) => scene.destroy(true));
+      pinnedTimelines.forEach((timeline) => timeline.kill());
+      createdElements.forEach((element) => element.remove());
+      lenis?.off?.("scroll", updateScrollMagic);
+      controller.destroy(true);
       ctx.revert();
       cleanupScrollReveal();
       if (rafId) cancelAnimationFrame(rafId);
